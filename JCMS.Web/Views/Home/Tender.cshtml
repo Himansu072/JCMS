@@ -1,0 +1,127 @@
+﻿
+@{
+    ViewData["Title"] = "Tender";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+
+    
+
+    .tenders .card:hover {
+        box-shadow: 0px 0px 15px rgb(0 0 0 / 20%);
+    }
+
+    .tenders .card {
+        box-shadow: 0px 0px 10px rgb(0 0 0 / 10%);
+        margin-bottom: 1.5rem;
+        border-radius: 0px;
+        transition: 0.2s;
+    }
+
+    .btn {
+        border-radius: 0;
+        box-shadow: 0 0.125rem 0.25rem 0 rgb(0 0 0 / 30%);
+    }
+
+    .tenders .card .card-status {
+        position: absolute;
+        font-size: 1rem;
+        color: #fff;
+        background: #0ba156;
+        padding: 0.5rem;
+        border-radius: 0 0 50% 0;
+    }
+
+    .tenders .card .card-body {
+        padding-left: 4.5rem;
+    }
+
+    .card-body {
+        flex: 1 1 auto;
+        min-height: 1px;
+        padding: 1.25rem;
+    }
+    .tenders .card .card-date {
+    color: #6e707e;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+</style>
+<section id="breadcrumb_section">        
+        <div class="container">
+            <nav aria-label="breadcrumb" class="py-2">
+                <ol class="breadcrumb mb-0">
+                  <li class="breadcrumb-item"><a href="#">Home</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+                </ol>
+            </nav>
+        </div>
+</section>
+  <section id="about_section">
+        <div class="container">
+            <div class="about_section">
+                <div class="row align-items-center g-lg-5 g-3">
+                    <div class="col-lg-12">
+                    <div id="alltender" class="container tenders active">
+                        
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+  </section>
+@section scripts
+  {
+    <script src="~/theme/plugins/moment/moment.min.js"></script>
+      <script>
+$(document).ready(function() {
+            loadData();
+        function loadData() {
+            debugger;
+            //$('#btnSubmit').text('Submit');
+            $.ajax({
+                    url: '/Admin/Content/GetTenderListpublic',
+                //data: { tName: $('#txtName').val(), date: $('#txtDate').val() },
+                type: "POST",
+                dataType: "json",
+                cache: false,
+                async: false,
+                
+                success: function (data) {
+                    debugger;
+                    var result = data;
+                    var html1 = '';
+
+                    var prev_date = new Date();
+                    prev_date.setDate(prev_date.getDate() - 1);
+                    for (var x = 0; x < result.length; x++) {
+
+
+                        html1 += '<div class="card">'
+                            if (moment(result[x].openingDt).format('DD-MM-YYYY') > moment(prev_date).format('DD-MM-YYYY')) {
+                                html1 += '<span class="card-status screen-reader" tabindex = "37" >New</span>'
+                        }
+                        html1+='<div class="card-body"><h5 class="card-title mt-3 screen-reader" tabindex="86">'+result[x].titleen +'</h5><div class="d-md-flex justify-content-md-between">'
+                            html1 += '<p class="card-date text-right screen-reader" tabindex="87"><i class="far fa-calendar-alt"></i>'
+                            html1 += '<span>Opening Date :' + moment(result[x].openingDt).format('DD-MM-YYYY') + ' (at ' + moment(result[x].openingDt).format('h:mmA') + ')' + '</span> - <span>Closing Date: ' + moment(result[x].closingDt).format('DD-MM-YYYY') + ' (on ' + moment(result[x].closingDt).format('h:mmA') + ')'
+                            if (moment(result[x].openingDt).format('DD-MM-YYYY') != moment(result[x].subDate).format('DD-MM-YYYY'))
+                            {
+                                html1 += '  - Submission Date :' + moment(result[x].subDate).format('DD-MM-YYYY') + ' (on ' + moment(result[x].subDate).format('h:mmA') + ')'
+                            }
+                            html1 +=  '</span></p><a href = "/Website/download/' + result[x].fileName + '" target = "_blank" class="btn btn-outline-info card-download-file screen-reader" title = "Download" tabindex = "88" ><i class="fas fa-download"></i> Download</a></div></div></div>'
+
+                            $('#alltender').html(html1);
+
+                    //    html += '</div>'
+                }
+                }
+            })
+
+
+        }
+  });
+  </script>
+  }
+
+
+

@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewData["Title"] = "Documents";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section id="breadcrumb_section">
+    <div class="container">
+        <nav aria-label="breadcrumb" class="py-2">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+            </ol>
+        </nav>
+    </div>
+</section>
+<div class="p-10 bg-surface-secondary" style=" padding-top:20px">
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h6>Documents</h6>
+
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover table-nowrap table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="text-center" style="width:20px;">Sl#</th>
+                            <th style="width:69%;">Title</th>
+                            <th style="width:15%">Language</th>
+                            <th scope="col" class="text-center">Download</th>
+                        </tr>
+                    </thead>
+                    <tbody id="AllTable">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script>
+        $(function () {
+            binddata();
+            function binddata() {
+
+                $.ajax({
+                    url: '/Admin/Content/GetDocument', //URL to upload files
+                    type: "POST", //as we will be posting files and other method POST is used
+                    dataType: "json",
+                    data: {},
+                    content: "application/json; charset=utf-8",
+                    success: function (data) {
+                        var html1 = '';
+                        if (data.length == 0) {
+                            html1 = '<tr><td colspan="8"><center><b>No Record found</b></center></td></tr>';
+                        }
+                        for (var x = 0; x < data.length; x++) {
+                            html1 += '<tr>'
+                            html1 += '<td class="text-center">' + (x + 1) + '</td> '
+                            html1 += '<td>' + data[x].title + '</td>'
+                            html1 += '<td>' + data[x].language + '</td>'
+                            html1 += '<td  style="text-align:center"><a target="_blank" href="/Website/download/' + data[x].fileName + '"  ><i class="fa fa-download text-warning"></i>  </a></td>'
+                           
+                            html1 += '</tr>'
+                        }
+                        $('#AllTable').html(html1);
+
+
+                    },
+                    error: function (err) {
+                        alert(err.status);
+                    }
+                });
+            }
+
+        });
+    </script>
+}

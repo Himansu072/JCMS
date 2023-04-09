@@ -1,0 +1,328 @@
+﻿@{
+    ViewData["Title"] = "District Adminstration";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-secondary">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="card-title">List of District Adminstration</div>
+                    </div>
+                    <div class="col-6">
+                        <input type="button" id="btnaddnew" value="Add New" class="btn bg-gradient-info  float-right mr-1" data-toggle="modal" data-target="#staticBackdrop">
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+
+                <div>
+                    <table id="tbladmis" class="table table-striped table-bordered request-table" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Sl.No</th>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Address</th>
+                                <th>Mobile</th>
+                                <th>Email</th>
+                                <th>Image</th>
+                                <th>Published(Home page)</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Add Administration</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="col-lg-12">
+                                <form id="formdist" name="formdist">
+                                    <input name="id" type="hidden" id="hdnid" />
+                                    <div class="form-group">
+                                        <div class="form-row">
+                                            <label for="">Full Name</label>
+                                            <input id="name" type="text" name="Name" class="form-control" required maxlength="60">
+                                        </div>
+                                        <div class="form-row">
+                                            <label for="">Position</label>
+                                            <input id="Position" type="text" name="Position" class="form-control" required maxlength="50">
+                                        </div>
+                                        <div class="form-row">
+                                            <label for="">Address</label>
+                                            <input id="Address" type="text" name="Address" class="form-control">
+                                        </div>
+                                        <div class="form-row">
+                                            <label for="">Mobile</label>
+                                            <input id="mobile" type="text" name="mobile" class="form-control">
+                                        </div>
+                                        <div class="form-row">
+                                            <label for="">Email(optional)</label>
+                                            <input id="Landline" type="text" name="Landline" class="form-control">
+                                        </div>
+                                        <div id="img" class="form-row">
+                                            <label for="">Image</label>
+                                            <input id="profilepic" type="file" name="files" class="form-control">
+                                        </div>
+
+                                        <div class="form-row d-flex gap-lg-5 gap-3 my-lg-4 my-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="PublishedMainPage[]" value="1" id="flexRadioDefault1">
+                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                    Main page(Top)
+                                                </label>
+                                            </div>&nbsp;&nbsp;&nbsp;
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="PublishedMainPage[]" value="2" id="flexRadioDefault2">
+                                                <label class="form-check-label" for="flexRadioDefault2">
+                                                    Main page(Bottom)
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary w-100 mt-4" style="--bs-btn-bg: #083f49; --bs-btn-border-color: #083f49;">Submit Now</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    @* <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Understood</button>
+                    </div>*@
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+@section Scripts
+    {
+    <script>
+
+
+
+        // Wait for the DOM to be ready
+        $(function () {
+
+            $('input[type="checkbox"]').on('change', function () {
+                $('input[name="' + this.name + '"]').not(this).prop('checked', false);
+            });
+            $("form[name='formdist']").validate({
+                // Specify validation rules
+                rules: {
+                    // The key name on the left side is the name attribute
+                    // of an input field. Validation rules are defined
+                    // on the right side
+                    Name: {
+                        required: true,
+                        maxlength: 60
+                    },
+                    Position: "required",
+                    Address: "required",
+                    mobile: {
+                        required: true,
+                        digits: true,
+                        rangelength: [10, 12],
+                    },
+                    files: "required",
+                },
+                // Specify validation error messages
+                messages: {
+                    Name: {
+                        required: "Please provide a Name",
+                        maxlength: "Your password must be at max 60 characters long"
+                    },
+                    Position: "Please enter your position",
+                    Address: "Please enter your address",
+                    mobile: {
+                        required: "Please provide a Mobile no",
+                        digits: "Only digits allow",
+                        rangelength: "Please enter a value  10  characters long",
+                    },
+                    files: "Please upload image",
+
+                },
+                // Make sure the form is submitted to the destination defined
+                // in the "action" attribute of the form when valid
+                submitHandler: function (form) {
+                    var form = $("#formdist");
+                    var data = new FormData();
+                    var files = $("#profilepic").get(0).files;
+                    data.append("MyUploader", files[0]);
+                    $.each(form.serializeArray(), function (key, input) {
+                        data.append(input.name, input.value);
+                    });
+                    data.append("PublishedMainPage", $('input[type="checkbox"]:checked').val());
+
+                    $.ajax({
+                        url: '/Admin/Page/SubmitDistofficial', //URL to upload files
+                        type: "POST", //as we will be posting files and other method POST is used
+                        processData: false, //remember to set processData and ContentType to false, otherwise you may get an error
+                        contentType: false,
+                        data: data,
+                        success: function (result) {
+
+                            if (result.status == "success") {
+
+                                binddata();
+                                alert(result.status);
+                                $("#formdist").trigger("reset");
+                                $("#staticBackdrop").modal('hide');
+
+                            }
+                            else {
+                                alert(result.status);
+                            }
+
+                        },
+                        error: function (err) {
+                            alert(err.status);
+                        }
+                    });
+                }
+            });
+
+            function binddata() {
+                var TablaExample = $('#tbladmis').DataTable();
+
+                // Delete all data inside table and maintain the DataTable instance
+                TablaExample.clear().draw();
+                $('#tbladmis').dataTable().fnDestroy();
+                $.ajax({
+                    url: '/Admin/Page/GetAdminstrationlist', //URL to upload files
+                    type: "POST", //as we will be posting files and other method POST is used
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+
+
+                        var items = '';
+                        $.each(data, function (i, item) {
+                            if (item.landline == null) {
+                                item.landline = "";
+                            }
+                            if (item.publishedMainPage == '1') {
+                                item.publishedMainPage = "Main page(Top)";
+                            }
+                            else if (item.publishedMainPage == '2') {
+                                item.publishedMainPage = "Main page(Bottom)";
+                            }
+                            else {
+                                item.publishedMainPage = "";
+                            }
+                            var slno = parseInt(i) + parseInt(1);
+                            var rows = "<tr>"
+                                + "<td>" + slno + "</td>"
+                                + "<td class='name'>" + item.name + "</td>"
+                                + "<td class='position'>" + item.position + "</td>"
+                                + "<td class='address'>" + item.address + "</td>"
+                                + "<td class='mobile'>" + item.mobile + "</td>"
+                                + "<td class='landline'>" + item.email + "</td>"
+
+                                + "<td class='imagepath'><img width='110px' src=/public/Official/" + item.imagepath + "></td>"
+                                + "<td class='publishedMainPage'>" + item.publishedMainPage + "<input type='hidden' id='vhdnid' value=" + item.id + "></td>"
+                                + "<td><a id='editStudentModal' data-toggle='modal' data-target='#staticBackdrop'  class='gfgselect btn btn-info'> <i class='glyphicon glyphicon-pencil'></i>  Edit </a>  </td>"
+                                + "<td><a id='deleteStudentModal'  class='btn btn-danger'> <i class='glyphicon glyphicon-trash'></i>  Delete </a>  </td>"
+                                + "</tr>";
+                            $('#tbladmis tbody').append(rows);
+                        });
+
+                        $('#tbladmis').DataTable({
+                            columnDefs: [
+                                { width: '2%', targets: 0 }
+                            ],
+                            fixedColumns: true,
+                            //"bDestroy": true
+                        });
+
+                    },
+                    error: function (err) {
+                        alert(err.status);
+                    }
+                });
+            }
+            binddata();
+            //btnaddnew
+            $(document).on('click', '#btnaddnew', function () {
+                $("#staticBackdropLabel").text("Add Administration");
+                $("#formdist").trigger("reset");
+                $("#formdist input[type='hidden']").val("0");
+                $("#formdist").validate().resetForm();
+                $("#img").show();
+            });
+            $(document).on('click', '.gfgselect', function () {
+                $("#formdist").validate().resetForm();
+                $("#name").val($(this).parents("tr").find(".name").text());
+                $("#Position").val($(this).parents("tr").find(".position").text());
+                $("#Address").val($(this).parents("tr").find(".address").text());
+                $("#mobile").val($(this).parents("tr").find(".mobile").text());
+                $("#Landline").val($(this).parents("tr").find(".landline").text());
+                $("#img").hide();
+                //alert($(this).parents('tr').find('input[type="hidden"]').val());
+                $("#hdnid").val($(this).parents("tr").find("input[type='hidden']").val());
+                if ($(this).parents("tr").find(".publishedMainPage").text() == 'Main page(Top)') {
+                    $("#flexRadioDefault1").prop('checked', true)
+                }
+                if ($(this).parents("tr").find(".publishedMainPage").text() == 'Main page(Bottom)') {
+                    $("#flexRadioDefault2").prop('checked', true)
+                }
+                $("#staticBackdropLabel").text("Edit Administration");
+
+            });
+            $(document).on('click', '#deleteStudentModal', function () {
+                var ids = $(this).parents("tr").find("input[type='hidden']").val();
+                $.jAlert({
+                    'type': 'confirm',
+                    'confirmQuestion': 'Do you want to delete this?',
+                    'onConfirm': function (e, btn) {
+                        e.preventDefault();
+
+                        $.ajax({
+                            url: '/Admin/Page/DeleteAdminstrationlist?id=' + ids, //URL to upload files
+                            type: "POST", //as we will be posting files and other method POST is used
+                            // dataType: "json",
+                            // params: { id:ids},
+                            contentType: "application/json; charset=utf-8",
+                            success: function (data) {
+                                binddata();
+                                alert(data.status);
+                            },
+                            error: function (err) {
+                                alert(err.status);
+                            }
+                        });
+                        btn.parents('.jAlert').closeAlert();
+                        return false;
+                    },
+                    'onDeny': function (e, btn) {
+                        e.preventDefault();
+                        //do something here
+                        btn.parents('.jAlert').closeAlert();
+                        return false;
+                    }
+                });
+
+            });
+
+        });
+
+    </script>
+}

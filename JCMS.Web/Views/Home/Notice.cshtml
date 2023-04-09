@@ -1,0 +1,97 @@
+﻿
+@{
+    ViewData["Title"] = "Notice";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- Banner -->
+<div class="btn w-full  rounded-0 py-2 border-0 position-relative" style="z-index: 1000;">
+</div>
+
+<div class="p-10 bg-surface-secondary">
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h6>Advertisement</h6>
+
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover table-nowrap table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="text-center" style="width:20px;">Sl#</th>
+                            <th style="width:22%;">Title</th>
+                            <th style="width:25%">Description</th>
+                            <th scope="col" class="text-center">Opening Date</th>
+                            <th scope="col" class="text-center">End Date</th>
+                            <th scope="col" class="text-center">File</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="AllTable">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+@section Scripts
+    {
+    <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+    <script src="~/theme/plugins/moment/moment.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            loadData();
+        });
+        function loadData() {
+            debugger;
+            //$('#btnSubmit').text('Submit');
+            $.ajax({
+                url: '/Admin/Content/GetNoticeList',
+                //data: { tName: $('#txtName').val(), date: $('#txtDate').val() },
+                type: "POST",
+                dataType: "json",
+                cache: false,
+                async: false,
+                //contentType: false,
+                //processData: false,
+                beforeSend: function () {
+                    //$('.loader-box').addClass('d-block');
+                },
+                success: function (data) {
+                    debugger;
+                    var result = data;
+                    var html1 = '';
+
+                    if (result.length == 0) {
+                        html1 = '<tr><td colspan="8"><center><b>No Record found</b></center></td></tr>';
+                    }
+                    for (var x = 0; x < result.length; x++) {
+
+
+                        html1 += '<tr>'
+                        html1 += '<td class="text-center">' + (x + 1) + '</td> '
+                        html1 += '<td>' + result[x].title + '</td>'
+                        html1 += '<td>' + result[x].description + '</td>'
+                        html1 += '<td class="text-center">' + moment(result[x].startDate).format('DD-MM-YYYY') + '</td>'
+                        html1 += '<td class="text-center">' + moment(result[x].endDate).format('DD-MM-YYYY') + '</td>'
+                        html1 += '<td  style="text-align:center"><a target="_blank" href="/Website/Advertise/' + result[x].filename + '"  > View <i class="fa fa-file-pdf text-danger"></i></a></td>'
+
+                        html1 += '</tr>'
+                    }
+                    //html += '</tbody>'
+                    //html += '</table>'
+                    $('#AllTable').html(html1);
+
+                    //    html += '</div>'
+                },
+                complete: function () {
+                    $('.loader-box').removeClass('d-block');
+                },
+            });
+
+        }
+    </script>
+   }
+

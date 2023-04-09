@@ -1,0 +1,423 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ଜଗତସିଂହପୁର ନଗର ପାଳିକା || Jagatsinghpur Municipality</title>
+    <!-- External Style Sheet -->
+    <link rel="stylesheet" href="/public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="/public/css/aos.css">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="~/theme/plugins/fontawesome-free/css/all.min.css">
+    <!-- End External Style Sheet -->
+</head>
+<body style="margin:0px;padding:0px">
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v15.0"
+        nonce="Uc0gokdn"></script>
+<header>
+        <!-- Top Navbar -->
+        <div class="top_nav">
+            <div class="container">
+                <div class="d-flex justify-content-between py-1">
+                    <ul class="list-unstyled d-flex gap-2 mb-0">
+                        <li>+</li>
+                        <li>A</li>
+                        <li>-</li>
+                    </ul>
+
+                    <ul class="list-unstyled d-flex gap-2 mb-0">
+                        <li>English</li>
+                       @* <li>ଓଡ଼ିଆ</li>*@
+                    </ul>
+
+                    <ul class="list-unstyled d-flex gap-2 mb-0">
+                        <li>Screen Reader Access</li>
+                        <li>Skip to Main Content</li>
+                        <li>FAQ</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- End Top Navbar -->
+        <!-- Logo Wrapper -->
+        <div class="container">
+            <nav class="navbar navbar-expand-lg logo_nav">
+                <div class="navbar-brand">
+                    <a href="#" class="d-flex align-items-center gap-2">
+                        <img src="/public/images/logo.png" width="100px" alt="">
+                        <div class="logo_name">
+                            <h3>ଜଗତସିଂହପୁର ପୌରପାଳିକା</h3>
+                            <h4>Jagatsinghpur Municipality</h4>
+                            <span>Housing & Urban Development Department, Odisha</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="navbar-nav ms-auto tollfree">
+                    <a href="tel:1234567890">
+                        <img src="/public/images/tollfree.png" width="200px" alt="">
+                    </a>
+                </div>
+            </nav>
+        </div>
+        <!-- End Logo Wrapper -->
+        <!-- Menu Wrappper -->
+        <div class="main_menuWrapper">
+            <div class="container">
+
+                <nav class="navbar navbar-expand-lg p-0">
+                    <ul class="navbar-nav align-items-center g-4">
+                        <li class="nav-item active">
+                            <a asp-action="Index" asp-controller="Home" class="nav-link">
+                                <img src="/public/images/icons/homemenu.svg" width="25px" alt="">
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+                               aria-expanded="false">About Us</a>
+                            <ul class="dropdown-menu p-0" style="--bs-dropdown-border-radius: 0;
+                            --bs-dropdown-bg: #505d60;
+                            --bs-dropdown-color: #ffffff;
+                            --bs-dropdown-font-size: 14px;">
+                                <li>
+                                    <a class="dropdown-item" asp-action="WhoisWho" asp-controller="Home" style="--bs-dropdown-item-padding-y: .5rem;
+    --bs-dropdown-link-color: #ffffff" >Who & Who</a>
+
+                                </li>
+
+                                <li class="dropdown-submenu">
+                                    <a href="#" class="dropdown-toggle dropdown-item" data-toggle="dropdown" style="--bs-dropdown-item-padding-y: .5rem;--bs-dropdown-link-color: #ffffff">Incumbency</a>
+                                    <!-- Level 2 -->
+                                    <ul class="dropdown-menu p-0" style="--bs-dropdown-border-radius: 0;
+                                        --bs-dropdown-bg: #505d60;
+                                        --bs-dropdown-color: #ffffff;
+                                        --bs-dropdown-font-size: 14px;">
+                                        <li>
+                                            <a  class="dropdown-item " asp-action="Chairman" asp-controller="Home" style="--bs-dropdown-item-padding-y: .5rem;--bs-dropdown-link-color: #ffffff">List Of Chair Person</a>
+                                        </li>
+                                        <li>
+@*                                            <a href="#" class="dropdown-item " style="--bs-dropdown-item-padding-y: .5rem;--bs-dropdown-link-color: #ffffff">List Of EO</a>
+*@                                            <a class="dropdown-item " asp-action="Executiveofficer" asp-controller="Home" style="--bs-dropdown-item-padding-y: .5rem;--bs-dropdown-link-color: #ffffff">List Of EO</a>
+                                        </li>
+                                       @* <li>
+                                            <a href="#" class="dropdown-item " style="--bs-dropdown-item-padding-y: .5rem;--bs-dropdown-link-color: #ffffff">List Of Council Body</a>
+                                        </li>*@
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" style="--bs-dropdown-item-padding-y: .5rem;
+    --bs-dropdown-link-color: #ffffff" asp-action="Demography" asp-controller="Home">Demography</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" style="--bs-dropdown-item-padding-y: .5rem;
+    --bs-dropdown-link-color: #ffffff" asp-action="PublicUtilities" asp-controller="Home">Public Utilities</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" style="--bs-dropdown-item-padding-y: .5rem;
+    --bs-dropdown-link-color: #ffffff" asp-action="Mission" asp-controller="Home">Mission</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+                               aria-expanded="false">Directory</a>
+                            <ul class="dropdown-menu p-0" style="--bs-dropdown-border-radius: 0;
+                            --bs-dropdown-bg: #505d60;
+                            --bs-dropdown-color: #ffffff;
+                            --bs-dropdown-font-size: 14px;">
+                               @* <li>
+                                    <a class="dropdown-item" style="--bs-dropdown-item-padding-y: .5rem;
+    --bs-dropdown-link-color: #ffffff" href="#">Muncipality Contact</a>
+                                </li>*@
+                                <li>
+                                   @* <a class="dropdown-item" style="--bs-dropdown-item-padding-y: .5rem;
+    --bs-dropdown-link-color: #ffffff" href="#">Ward Officer Conatct</a>*@
+                                    <a class="dropdown-item" asp-action="WardOfficer" asp-controller="Home" style="--bs-dropdown-item-padding-y: .5rem;
+    --bs-dropdown-link-color: #ffffff">Ward Officer Contact</a>
+                                </li>
+                                <li>
+                                    @*<a class="dropdown-item" style="--bs-dropdown-item-padding-y: .5rem;
+    --bs-dropdown-link-color: #ffffff" href="#">Coulnciler Conatct</a>*@
+                                    <a class="dropdown-item" asp-action="Counciler" asp-controller="Home" style="--bs-dropdown-item-padding-y: .5rem;
+    --bs-dropdown-link-color: #ffffff">Coulnciler Conatct</a>
+                                </li>
+
+
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Services</a>
+                            <ul id="UlS" class="dropdown-menu p-0" style="--bs-dropdown-border-radius: 0;
+                            --bs-dropdown-bg: #505d60;
+                            --bs-dropdown-color: #ffffff;
+                            --bs-dropdown-font-size: 14px;">
+                            </ul>
+                        </li>
+                        @*<li class="nav-item">
+                            <a href="#" class="nav-link">Services</a>
+                        </li>*@
+                        <li class="nav-item dropdown">
+                            <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+                               aria-expanded="false">Notice</a>
+                            <ul class="dropdown-menu p-0" style="--bs-dropdown-border-radius: 0;
+                            --bs-dropdown-bg: #505d60;
+                            --bs-dropdown-color: #ffffff;
+                            --bs-dropdown-font-size: 14px;">
+                                <li>
+                                    <a class="dropdown-item" style="--bs-dropdown-item-padding-y: .5rem;
+    --bs-dropdown-link-color: #ffffff" asp-action="Tender" asp-controller="Home">Tender</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" style="--bs-dropdown-item-padding-y: .5rem;
+    --bs-dropdown-link-color: #ffffff" asp-action="Announcement" asp-controller="Home">Announcement</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" style="--bs-dropdown-item-padding-y: .5rem;
+    --bs-dropdown-link-color: #ffffff" asp-action="Notice" asp-controller="Home">Notice</a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item" style="--bs-dropdown-item-padding-y: .5rem;
+    --bs-dropdown-link-color: #ffffff" asp-action="Advertisement" asp-controller="Home">Advertisement</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Documents" asp-controller="Home" class="nav-link">Documents</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" >Programme & Scheme</a>
+                            <ul id="psm" class="dropdown-menu p-0" style="--bs-dropdown-border-radius: 0;
+                            --bs-dropdown-bg: #505d60;
+                            --bs-dropdown-color: #ffffff;
+                            --bs-dropdown-font-size: 14px;">
+                             
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="RTI" asp-controller="Home" class="nav-link">RTI</a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="News" asp-controller="Home" class="nav-link">News & Events</a>
+                        </li>
+                       
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Menu Wrappper -->
+    </header>
+
+    <div class="container-fluid">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+ <footer id="footer_container">
+        <div class="logowrapper">
+            <div class="container">
+                <ul class="">
+                    <li>
+                        <a href="">
+                            <img src="/public/images/logo/logo1.png" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img src="/public/images/logo/logo2.png" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img src="/public/images/logo/logo3.png" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img src="/public/images/logo/logo4.png" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img src="/public/images/logo/logo5.png" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img src="/public/images/logo/logo6.png" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img src="/public/images/logo/logo7.png" alt="">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer_containerWrapper">
+            <div class="container">
+                <div class="footer_container">
+                    <div class="row g-4">
+                        <div class="col-lg-3">
+                            <div class="footer_inner">
+                                <h5 class="heading_title" style="--logo-clr: #ffffff;">Contact Us</h5>
+                                <ul class="list-unstyled">
+                                    <li class="ff">Jagatsinghpur Municipal Corporation</li>
+                                    <li>Jagatsinghpur</li>
+                                    <li>754103</li>
+                                    <li>Phone: 0675(111-0001)</li>
+                                    <li>Official Email: example@mail.com</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="footer_inner">
+                                <h5 class="heading_title" style="--logo-clr: #ffffff;">Quick Links</h5>
+                                <ul class="list-unstyled">
+                                    <li><a href="">E Office</a></li>
+                                    <li><a href="">Right to Information Act</a></li>
+                                    <li><a href="">Public Grievance</a></li>
+                                    <li><a href="">State Portal</a></li>
+                                    <li><a href="">Bhulekh Land Portal of Odisha</a></li>
+                                    <li><a href="">Census</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="footer_inner">
+                                <h5 class="heading_title" style="--logo-clr: #ffffff;">Help Line</h5>
+                                <ul class="list-unstyled">
+                                    <li><a href=""></a></li>
+                                    <li><a href=""></a></li>
+                                    <li><a href=""></a></li>
+                                    <li><a href=""></a></li>
+                                    <li><a href=""></a></li>
+                                    <li><a href=""></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="footer_inner">
+                                <h4 class="heading_title" style="--logo-clr: #ffffff;">Location map</h4>
+                                <iframe
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d59891.74818602402!2d86.1321251045304!3d20.24911700272666!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a19822fbc87ba77%3A0xc43e8674c6ef0301!2sJagatsinghpur%2C%20Odisha!5e0!3m2!1sen!2sin!4v1668575468436!5m2!1sen!2sin"
+                                    class="w-100 mt-4" height="150" style="border:0;" allowfullscreen="" loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer_btmWrapper">
+            <div class="container">
+                <div class="row g-lg-0 g-3">
+                    <div class="col-lg-6">
+                        <p class="mb-2">Copyright 2022 JM, Jagatsinghpur All Rights Reserved</p>
+                        <ul class="list-unstyled mb-0 d-flex cfc">
+                            <li><a href="">Privacy policy</a></li>
+                            <li><a href="">Disclaimar</a></li>
+                            <li><a href="">Terms of Use</a></li>
+                            <li><a href="">Sitemap</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-6 text-end">
+                        <p class="mb-2">Total Visitors</p>
+                        <img src="/public/images/counter.png" width="90px" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- External Javascript File -->
+    <script src="/public/js/jquery-3.6.0.min.js"></script>
+    <script src="/public/js/bootstrap.bundle.min.js"></script>
+    <script src="/public/js/swiper-bundle.min.js"></script>
+    <script src="/public/js/view-image.min.js"></script>
+    <script src="/public/js/infiniteslidev2.min.js"></script>
+    <script src="/public/js/aos.js"></script>
+    <script src="/public/js/script.js"></script>
+    <!-- End External Javascript File -->
+     <script>
+        $(function () {
+            $('.flashNews ul,.logowrapper ul').infiniteslide({
+                'speed': 20,
+                'direction': 'left',
+                'pauseonhover': true,
+                'responsive': true,
+            });
+        });
+    </script>
+     <!-- Toggle Menu -->
+    <script>
+        //let menutoggle = document.querySelector('.toggle');
+        //menutoggle.onclick = function () {
+        //    menutoggle.classList.toggle('active')
+        //}
+        $(document).ready(function () {
+            bindpmsdata();
+            loadServiceNameMenu();
+        });
+        function bindpmsdata() {
+
+            $.ajax({
+                url: '/Admin/Content/GetPogrameCategory', //URL to upload files
+                type: "POST", //as we will be posting files and other method POST is used
+                dataType: "json",
+                data: {},
+                content: "application/json; charset=utf-8",
+                success: function (data) {
+                    var s = '';
+                    for (var i = 0; i < data.length; i++) {
+                        s += '<li><a class="dropdown-item" style="--bs-dropdown-item-padding-y: .5rem;--bs-dropdown-link-color: #ffffff" href="/Programme/' + data[i].id + '">' + data[i].categoryName + '</a></li>';
+                    }
+                    $("#psm").html(s);
+
+                },
+                error: function (err) {
+                    alert(err.status);
+                }
+            });
+        }
+        function loadServiceNameMenu() {
+            debugger;
+            //$('#btnSubmit').text('Submit');
+            $.ajax({
+                url: '/Admin/Page/GetServiceDetails',
+                //data: { tName: $('#txtName').val(), date: $('#txtDate').val() },
+                type: "POST",
+                dataType: "json",
+                cache: false,
+                async: false,
+
+                success: function (data) {
+                    debugger;
+                    var result = data;
+                    var html1 = '';
+
+                    var prev_date = new Date();
+                    prev_date.setDate(prev_date.getDate() - 1);
+
+                    for (var x = 0; x < result.length; x++) {
+                        var rows = '<li class="col" > <a href="" >'
+
+                            + result[x].name + '</a> </li > ';
+                        $('#UlS').append(rows);
+                    }
+
+                }
+            })
+
+        }
+       </script>
+    
+    <!-- End Toggle Menu -->
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

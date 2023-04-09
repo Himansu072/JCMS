@@ -1,0 +1,251 @@
+﻿
+@{
+    ViewData["Title"] = "Add Programe";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<script src="~/js/CKEditor/ckeditor.js" type="text/javascript" language="javascript"></script>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <ul class="nav nav-tabs mb-3" id="myTab0" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="home-tab0" data-toggle="tab" data-target="#home0" type="button" role="tab" aria-controls="home" aria-selected="true"> Programme </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="profile-tab0" data-toggle="tab" data-target="#profile0" type="button" role="tab" aria-controls="profile" aria-selected="false"> Caregory </button>
+          </li>
+        </ul>
+      </div>
+      <div class="card-body">
+        <div class="tab-content" id="myTabContent0">
+          <div class="tab-pane fade show active" id="home0" role="tabpanel" aria-labelledby="home-tab0">
+               <div class="form-group row">
+                  <div class="col-sm-6">
+                                <h4 class="m-0">Manage Programme</h4>
+                  </div>
+               <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+                </ol>
+               </div>
+              </div>
+              <form id="formdist" name="formdist">
+              <div class="form-group row">
+                  <label for="staticEmail" class="col-sm-2 col-form-label">Category :</label>
+                  <div class="col-sm-10">
+                       <select id="pageDropdown" name="pageDropdown" class="form-control">
+                        <option selected>Choose...</option>                        
+                      </select>
+                    
+                  </div>
+              </div>
+              <div class="form-group row">
+                <label for="inputPassword" class="col-sm-2 col-form-label">Content :</label>
+                <div class="col-sm-10">
+                     <textarea id="ckedtor" class="form-control"></textarea>
+                </div>
+              </div>
+               <div class="form-group">
+                    <button type="submit" class="btn btn-primary w-80 mt-4 float-right" style="--bs-btn-bg: #083f49; --bs-btn-border-color: #083f49;">Submit</button>
+                </div>
+                </form>
+          </div>
+          <div class="tab-pane fade" id="profile0" role="tabpanel" aria-labelledby="profile-tab0">
+               <div class="form-group row">
+                  <div class="col-sm-6">
+                                <h4 class="m-0">Programme Category</h4>
+                  </div>
+               <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+                </ol>
+               </div>
+              </div>
+              <form id="formpcate" name="formpcate">
+                  <input type="hidden" id="dataid" value="0" />
+               <div class="form-group row">
+                  <label for="staticEmail" class="col-sm-2 col-form-label">Category Name:</label>
+                  <div class="col-sm-10">
+                     <input type="text" class="form-control" id="utilityname" placeholder="Enter CategoryName" autocomplete="off" required>  
+                    
+                  </div>
+                  
+              </div>
+              <div class="form-group row float-right">
+              <button  type="submit" class="btn btn-primary mb-2 " style="--bs-btn-bg: #083f49; --bs-btn-border-color: #083f49;">Submit</button>
+              </div>
+              </form>
+              <br />
+              <br />
+            <hr />
+            <div class="table-responsive">
+
+                            <table class="table table-bordered">
+                                <thead class="bg-light">
+                                    <tr>
+                                        <th width="40" class="text-center">Sl#</th>
+                                        <th>Category</th>
+                                        <th width="80" class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="AllTable">
+                                </tbody>
+                            </table>
+
+                        </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal -->
+</div>
+@section Scripts
+{
+
+ <script>
+$(function() {
+        CKEDITOR.replace('ckedtor');
+        CKEDITOR.config.allowedContent = true
+        CKEDITOR.ignoreEmptyParagraph = true;
+    binddata();
+    function binddata() 
+            {
+               
+                    $.ajax({
+                            url: '/Admin/Content/GetPogrameCategory', //URL to upload files 
+                            type: "POST", //as we will be posting files and other method POST is used
+                            dataType: "json", 
+                            data: {},
+                            content: "application/json; charset=utf-8",
+                            success: function (data) {                             
+                                   var s = '<option value="">Please Select</option>';  
+                                   for (var i = 0; i < data.length; i++) {  
+                                       s += '<option value="' + data[i].id + '">' + data[i].categoryName + '</option>';  
+                                   }  
+                                   $("#pageDropdown").html(s);  
+                                   var html1 = '';
+                                if (data.length == 0) {
+                                    html1 = '<tr><td colspan="8"><center><b>No Record found</b></center></td></tr>';
+                                }
+                                for (var x = 0; x < data.length; x++) {
+                                    html1 += '<tr>'
+                                    html1 += '<td class="text-center">' + (x + 1) + '</td> '
+                                    html1 += '<td>' + data[x].categoryName + '</td>'
+                                    html1 += '<td>'
+                                    html1 += '<a  class="mr-1" onclick="FunEditData(' + data[x].id + ');" data-placement="top" data-toggle="tooltip" title="" data-original-title="Edit"><i class="fa fa-edit text-info"></i></a>'
+                                    if ($("#as").val() == "1") {
+                                    html1 += '<a onclick="FunDeleteData(' + data[x].id + ');" data-placement="top" data-toggle="tooltip" title="" data-original-title="Delete"><i class="fa fa-trash text-danger"></i></a>'
+                                    }
+                                    html1 += '</td>'
+                                    html1 += '</tr>'
+                                }
+                                $('#AllTable').html(html1);
+
+                              
+                            },
+                            error: function (err) {
+                                alert(err.status);
+                            }
+                        });
+            }
+    $("form[name='formdist']").validate({
+        rules: {
+             pageDropdown: "required",
+         },
+          messages: {
+              files: "Please select",
+          },
+        submitHandler: function(form) {
+            for (instance in CKEDITOR.instances) {
+                CKEDITOR.instances[instance].updateElement();
+            }
+            var data = new FormData();                        
+            data.append("id", $("#pageDropdown").val());
+            data.append("CategoryContent", $("#ckedtor").val());
+             $.ajax({
+                            url: '/Admin/Content/AddPogramecontent',  
+                            type: "POST", 
+                            processData: false, 
+                            contentType: false,
+                            data: data,
+                            success: function (result) {                              
+                                
+                                     alert(result.status);
+                            },
+                            error: function (err) {
+                                alert(err.status);
+                            }
+                        });
+        }
+    });
+     $("#pageDropdown").change(function() {
+         //CKEDITOR.instances['ckedtor'].setData('');
+        loadContent();
+    });
+    function loadContent() {
+                        $.ajax({
+                            url: '/Admin/Content/GetPogrameCategoryid', //URL to upload files 
+                            type: "POST", //as we will be posting files and other method POST is used
+                            dataType: "json",
+                            data: {
+                                "id": $("#pageDropdown").val()
+                            },
+                            content: "application/json; charset=utf-8",
+                            success: function(data) {
+                                
+                                if (data != null) {
+                                    var str = data.categoryContent;
+                                    CKEDITOR.instances['ckedtor'].setData(str);
+                                }
+                                else {
+                                    CKEDITOR.instances['ckedtor'].setData("");
+                                }
+                            },
+                            error: function(err) {
+                                alert(err.status);
+                            }
+                        });
+            }
+     $("form[name='formpcate']").validate({
+         rules: {
+             utilityname: "required",
+         },
+          messages: {
+              utilityname: "Please Enter Categoryname",
+          },
+
+          submitHandler: function(form) {
+               var form = $("#formpcate");
+                        var data = new FormData();
+                        data.append("CategoryName", $("#utilityname").val());
+                        data.append("id", $("#dataid").val());
+                        $.ajax({
+                            url: '/Admin/Content/AddPogrameCategory',  
+                            type: "POST", 
+                            processData: false, 
+                            contentType: false,
+                            data: data,
+                            success: function (result) {                              
+                                
+                                $("#formpcate").trigger("reset");
+                                    $("#staticBackdrop").modal('hide');
+                                    binddata();
+                                     alert(result.status);
+                            },
+                            error: function (err) {
+                                alert(err.status);
+                            }
+                        });
+
+          }
+    });       
+});
+
+</Script>
+}

@@ -1,0 +1,127 @@
+﻿@{
+    ViewData["Title"] = "Add Content";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<script src="~/js/CKEditor/ckeditor.js" type="text/javascript" language="javascript"></script>
+<div class="row">
+<div class="col-md-12">
+    <div class="card">
+          <div class="card-header">
+            <div class="row"></div>
+          </div>
+          <div class="card-body">
+                 <form id="formdist" name="formdist">
+                <div class="form-group">
+                    <label>Select page</label>
+                    <select id="pageDropdown" name="pageDropdown" class="form-control">        
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Content</label>
+                    <textarea id="ckedtor"></textarea>
+    
+                </div>
+
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary w-80 mt-4" style="--bs-btn-bg: #083f49; --bs-btn-border-color: #083f49;">Submit</button>
+                </div>
+                </form>
+        </div>
+    </div>
+</div>
+</div>
+@section Scripts
+{
+
+ <script>
+$(function() {
+        CKEDITOR.replace('ckedtor');
+        CKEDITOR.config.allowedContent = true
+        CKEDITOR.ignoreEmptyParagraph = true;
+    binddata();
+    function binddata() 
+            {
+               
+                    $.ajax({
+                            url: '/Admin/Content/GetPagemaster', //URL to upload files 
+                            type: "POST", //as we will be posting files and other method POST is used
+                            dataType: "json",
+                            content: "application/json; charset=utf-8",
+                            success: function (data) {                             
+                                   var s = '<option value="">Please Select</option>';  
+                                   for (var i = 0; i < data.length; i++) {  
+                                       s += '<option value="' + data[i].pid + '">' + data[i].name + '</option>';  
+                                   }  
+                                   $("#pageDropdown").html(s);  
+                               
+                              
+                            },
+                            error: function (err) {
+                                alert(err.status);
+                            }
+                        });
+            }
+    $("form[name='formdist']").validate({
+        rules: {
+             pageDropdown: "required",
+         },
+          messages: {
+              files: "Please select",
+          },
+        submitHandler: function(form) {
+            for (instance in CKEDITOR.instances) {
+                CKEDITOR.instances[instance].updateElement();
+            }
+            var data = new FormData();                        
+            data.append("Pid", $("#pageDropdown").val());
+            data.append("Description", $("#ckedtor").val());
+             $.ajax({
+                            url: '/Admin/Content/Addpagecontent',  
+                            type: "POST", 
+                            processData: false, 
+                            contentType: false,
+                            data: data,
+                            success: function (result) {                              
+                                
+                                     alert(result.status);
+                            },
+                            error: function (err) {
+                                alert(err.status);
+                            }
+                        });
+        }
+    });
+     $("#pageDropdown").change(function() {
+         //CKEDITOR.instances['ckedtor'].setData('');
+        loadContent();
+    });
+    function loadContent() {
+    
+                        $.ajax({
+                            url: '/Admin/Content/GetPageContent', //URL to upload files 
+                            type: "POST", //as we will be posting files and other method POST is used
+                            dataType: "json",
+                            data: {
+                                "pid": $("#pageDropdown").val()
+                            },
+                            content: "application/json; charset=utf-8",
+                            success: function(data) {
+                                
+                                if (data != null) {
+                                    var str = data.description;
+                                    CKEDITOR.instances['ckedtor'].setData(str);
+                                }
+                                else {
+                                    CKEDITOR.instances['ckedtor'].setData("");
+                                }
+                            },
+                            error: function(err) {
+                                alert(err.status);
+                            }
+                        });
+            }
+   
+});
+</Script>
+}

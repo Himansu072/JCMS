@@ -1,0 +1,226 @@
+﻿
+@{
+    ViewData["Title"] = "PublicUtilities";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+
+    /*  bhoechie tab */
+    div.bhoechie-tab-container {
+        z-index: 10;
+        background-color: #e6e6e6;
+        padding: 0 !important;
+        border-radius: 4px;
+        -moz-border-radius: 4px;
+        border: 1px solid #ddd;
+        margin-top: 20px;
+        margin-left: 10px;
+        -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+        box-shadow: 0 6px 12px rgba(0,0,0,.175);
+        -moz-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+        background-clip: padding-box;
+        opacity: 0.97;
+        filter: alpha(opacity=97);
+        min-height:420px;
+    }
+
+    div.bhoechie-tab-menu {
+        padding-right: 0;
+        padding-left: 10px,5px,0;
+        padding-bottom: 0;
+    }
+
+        div.bhoechie-tab-menu div.list-group {
+            margin-bottom: 0;
+        }
+
+            div.bhoechie-tab-menu div.list-group > a {
+                margin-bottom: 0;
+            }
+
+                div.bhoechie-tab-menu div.list-group > a .glyphicon,
+                div.bhoechie-tab-menu div.list-group > a .fa {
+                    color: #5A55A3;
+                }
+
+                div.bhoechie-tab-menu div.list-group > a:first-child {
+                    border-top-right-radius: 0;
+                    -moz-border-top-right-radius: 0;
+                }
+
+                div.bhoechie-tab-menu div.list-group > a:last-child {
+                    border-bottom-right-radius: 0;
+                    -moz-border-bottom-right-radius: 0;
+                }
+
+                div.bhoechie-tab-menu div.list-group > a.active,
+                div.bhoechie-tab-menu div.list-group > a.active .glyphicon,
+                div.bhoechie-tab-menu div.list-group > a.active .fa {
+                    background-color: #b6b6b6e6;
+                    background-image: #5A55A3;
+                    color: #ffffff;
+                }
+
+                    div.bhoechie-tab-menu div.list-group > a.active:after {
+                        content: '';
+                        position: absolute;
+                        left: 100%;
+                        top: 50%;
+                        margin-top: -13px;
+                        border-left: 0;
+                        border-bottom: 13px solid transparent;
+                        border-top: 13px solid transparent;
+                        border-left: 10px solid #5A55A3;
+                    }
+
+    div.bhoechie-tab-content {
+        background-color: #e6e6e6;
+        /* border: 1px solid #eeeeee; */
+        padding-left: 20px;
+        padding-top: 10px;
+    }
+
+    div.bhoechie-tab div.bhoechie-tab-content:not(.active) {
+        display: none;
+    }
+</style>
+<div class="container">
+    <nav aria-label="breadcrumb" class="py-2">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="#">About</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Public Utilities</li>
+        </ol>
+    </nav>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bhoechie-tab-container">
+            <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 bhoechie-tab-menu">
+                    <div class="list-group" id="pubut">
+                   
+                    </div>
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 bhoechie-tab" id="det">
+                <!-- flight section -->
+                   
+               
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+ @section Scripts 
+ {
+    <script>
+        $(document).ready(function () {
+           var detaildata;
+            GetPublicUtilitydetails();
+            $(document).on('click', 'div.bhoechie-tab-menu>div.list-group>a', function (e) {
+                e.preventDefault();
+                $(this).siblings('a.active').removeClass("active");
+                $(this).addClass("active");
+                var index = $(this).index();
+                $("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+                $("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
+            });
+            
+            
+        });
+                function GetParameterValues(param) {
+            var url = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (var i = 0; i < url.length; i++) {
+                var urlparam = url[i].split('=');
+                if (urlparam[0] == param) {
+                    return urlparam[1];
+                }
+                }
+             }
+       
+        function GetPublicUtility() {
+            $.ajax({
+                url: '/Admin/Page/GetPublicUtilityCategory', //URL to upload files
+                type: "POST", //as we will be posting files and other method POST is used
+                dataType: "json",
+                content: "application/json; charset=utf-8",
+                success: function (data) {
+                    var items = '';
+                    $.each(data, function (i, item) {
+                        var listdata = detaildata;
+                        var listitems = '';
+                        if(i==0)
+                        {
+                            var rows = '<a href="#" class="list-group-item text-center active">'
+                                + '<img src="/public/Banner/' + item.imageName + '" height="50px" alt = "">'
+                                + '<span class="d-block" >' + item.categoryName + '</span></a>';
+                            $('#pubut').append(rows);
+
+                            var latestrows = '<div class="bhoechie-tab-content active"><div class="row">';
+                            $.each(listdata, function (i, listitems) {
+                                if (item.categoryName == listitems.categoryName) {
+                                    latestrows = latestrows + '<div class="col-sm-6"><div class="card" style="margin:4px">'
+                                        + '<div class="card-body"><h5 class="card-title">' + listitems.name + '</h5>'
+                                        + '<p class="card-text">' + listitems.address + '</p><a href="#" class="card-link">' + listitems.phone + '</a><a href="#" class="card-link">' + listitems.email + '</a><a href="#" class="card-link">' + listitems.websiteName + '</a>'
+
+                                        + '</div></div></div>'
+                                }
+
+                            });
+                        }
+                        else{
+                        
+                            var rows = '<a href="#" class="list-group-item text-center">'
+                                + '<img src="/public/Banner/' + item.imageName + '" height="50px" alt = "">'
+                                + '<span class="d-block" >' + item.categoryName + '</span></a>';
+                            $('#pubut').append(rows);
+                          var listdata=detaildata;
+                          var listitems ='';
+                        var latestrows = '<div class="bhoechie-tab-content"><div class="row">';
+                        $.each(listdata, function (i, listitems) {
+                            if (item.categoryName == listitems.categoryName)
+                            {
+                                latestrows = latestrows + '<div class="col-sm-6"><div class="card" style="margin:4px">'
+                                    + '<div class="card-body"><h5 class="card-title">'+listitems.name+'</h5>'
+                                    + '<p class="card-text">' + listitems.address + '</p><a href="#" class="card-link">' + listitems.phone + '</a><a href="#" class="card-link">' + listitems.email + '</a><a href="#" class="card-link">' + listitems.websiteName + '</a>'
+                                
+                                    + '</div></div></div>'
+                            }
+
+                            });
+                            }
+                        latestrows = latestrows + '</div></div>';
+                        $('#det').append(latestrows);
+                    });
+                     var id = GetParameterValues('userid');
+                        if(id!=undefined)
+                        {
+                             $("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+                            $("div.bhoechie-tab>div.bhoechie-tab-content").eq(id).addClass("active");
+                        }
+
+                },
+                error: function (err) {
+                    alert(err.status);
+                }
+            });
+        }
+        function GetPublicUtilitydetails() {
+            $.ajax({
+                url: '/Admin/Page/GetPublicUtility', //URL to upload files
+                type: "POST", //as we will be posting files and other method POST is used
+                dataType: "json",
+                content: "application/json; charset=utf-8",
+                success: function (data) {
+                    detaildata = data;
+                    GetPublicUtility();
+                   
+                 
+
+                },
+                error: function (err) {
+                    alert(err.status);
+                }
+            });
+        }
+    </script>
+ }

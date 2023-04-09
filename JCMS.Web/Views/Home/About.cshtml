@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewData["Title"] = "About Us";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section id="breadcrumb_section">
+        <img src="/public/images/banner.png" class="img-fluid" alt="">
+        <div class="container">
+            <nav aria-label="breadcrumb" class="py-2">
+                <ol class="breadcrumb mb-0">
+                  <li class="breadcrumb-item"><a href="#">Home</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+                </ol>
+            </nav>
+        </div>
+</section>
+  <section id="about_section">
+        <div class="container">
+            <div class="about_section">
+                <div class="row align-items-center g-lg-5 g-3">
+                    <div class="col-lg-12">
+                        <div class="about_sectionBottom">
+                            <h3 class="heading_title center_title">About Us</h3>
+                           <div id="abtus">
+
+                           </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+  </section>
+
+@section scripts
+{
+    <script>
+$(document).ready(function() {
+//    Getaboutus();
+//    function Getaboutus() {
+//    $.ajax({
+//        url: '/Admin/Content/GetPageContent', //URL to upload files 
+//        type: "POST", //as we will be posting files and other method POST is used
+//        dataType: "json",
+//        data: {
+//            "pid": 1
+//        },
+//        content: "application/json; charset=utf-8",
+//        success: function(data) {
+//            var str = data.description;
+//            if(str!=null)
+//            {
+                
+//                $("#abtus").html(str);
+//            }
+            
+//        },
+//        error: function(err) {
+//            alert(err.status);
+//        }
+//    });
+//}
+});
+    </script>
+    
+}

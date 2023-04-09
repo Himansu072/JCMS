@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewData["Title"] = "News";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section id="about_section">
+    <div class="container">
+        <div class="about_section">
+            <div class="row align-items-center g-lg-5 g-3">
+                <div class="col-lg-12">
+                    <div class="about_sectionBottom">
+                       
+                        <div class="inner-container">
+                            <div class="container">
+                                <div id="nws" class="news-container">
+                                    
+
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section scripts
+{
+    <script src="~/theme/plugins/moment/moment.min.js"></script>
+    <script>
+$(document).ready(function() {
+            GetNews();
+            function GetNews() {
+                $.ajax({
+                    url: '/Admin/Content/GetNewsevent', //URL to upload files
+                    type: "POST", //as we will be posting files and other method POST is used
+                    dataType: "json",                    
+                    content: "application/json; charset=utf-8",
+                    success: function (data) {
+                        var html1 = '';
+                         for (var x = 0; x < data.length; x++) {
+                            html1 +='<div class="row align-items-lg-center mb-4 pb-4 border-bottom" > <div class="col-lg-2 col-md-3 order-2 order-md-1">'
+                            html1 += '<div class="media-img mt-2 mt-md-0"><img src="/Website/download/'+ data[x].imageName +'" alt ="News Feed" style="height:166px;width:140px;" class="screen-reader"/></div>'
+                            html1 += '</div><div class="col-lg-10 col-md-9 order-1 order-md-2">'
+                            html1 += '<p class="mb-0"><span class="text-gray-600 font-italic small pr-3 screen-reader" >'+ moment(data[x].eventdate).format('DD-MMM-YYYY') +'</span></p>'
+                            html1 += '<p class="news-desc mb-1 screen-reader" >'+data[x].content+'</p></div></div>'
+                         }
+
+
+                        $("#nws").html(html1);
+                        
+
+                    },
+                    error: function (err) {
+                        alert(err.status);
+                    }
+                });
+            }
+});
+</script>
+}
+
+
+

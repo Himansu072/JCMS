@@ -1,0 +1,90 @@
+﻿
+@{
+    ViewData["Title"] = "WhoisWho";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section id="breadcrumb_section">
+        <img src="/public/images/banner.png" class="img-fluid" alt="">
+        <div class="container">
+            <nav aria-label="breadcrumb" class="py-2">
+                <ol class="breadcrumb mb-0">
+                  <li class="breadcrumb-item"><a href="#">Home</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+                </ol>
+            </nav>
+        </div>
+</section>
+  <section id="about_section">
+        <div class="container">
+            <div class="about_section">
+                <div class="row align-items-center g-lg-5 g-3">
+                    <div class="col-lg-12">
+                        <div class="about_sectionBottom">
+                            <h3 class="heading_title center_title">District Administration</h3>
+                            <table id="tbladmis" class="table table-bordered">
+                                <thead>
+                                     <tr class="table-dark">
+                                        <th>Sl.No</th>
+                                        <th>Profile Picture</th>
+                                        <th>Name</th>
+                                        <th>Designation</th>
+                                        <th>Email</th>
+                                        <th>Contact</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-center">
+                                   
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+  </section>
+
+  @section Scripts
+{
+
+<script>
+ $(document).ready(function() {
+    Getdata();
+});
+function null_method ($value) {
+    //$value === null ? "" : $value;
+    //return $value;
+    if ($value) {
+        return $value;
+    }
+    return "";
+}
+function Getdata() {
+       $.ajax({
+                            url: '/Admin/Page/GetAdminstrationlist', //URL to upload files 
+                            type: "POST", //as we will be posting files and other method POST is used
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (data) {
+                               var items = '';  
+                                $.each(data, function (i, item) {  
+                                    
+                                    var slno = parseInt(i) + parseInt(1);
+                                    var rows = "<tr>"  
+                                    + "<td>" +slno + "</td>"  
+                                    + "<td class='name'><img width='150px' src=/public/Official/"+item.imagepath + "></td>"  
+                                    + "<td class='position'>" + item.name + "</td>"  
+                                    + "<td class='address'>" + item.position + "</td>"  
+                                    + "<td class='mobile'>" + null_method(item.email) + "</td>"                                    
+                                    + "<td class='landline'>" + item.mobile+ "</td>"                                
+                                    
+                                   + "</tr>";  
+                                    $('#tbladmis tbody').append(rows);  
+                                }); 
+                            },
+                            error: function (err) {
+                                alert(err.status);
+                            }
+                        });
+}
+</script>
+}

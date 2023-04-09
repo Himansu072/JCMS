@@ -1,0 +1,388 @@
+﻿
+@{
+    ViewData["Title"] = "Gallery";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link rel="stylesheet" href="~/css/site.css" />
+<div class="row">
+<div class="col-md-12">
+<div class="card">
+        <div class="card-header">
+          <ul class="nav nav-tabs justify-content-left" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" data-toggle="tab" href="#home" role="tab">
+                <i class="now-ui-icons objects_umbrella-13"></i> Images
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#profile" role="tab">
+                <i class="now-ui-icons shopping_cart-simple"></i> Videos
+              </a>
+            </li>
+           
+          </ul>
+        </div>
+        <div class="card-body">
+          <!-- Tab panes -->
+          <div class="tab-content text-left">
+            <div class="tab-pane active" id="home" role="tabpanel">
+              <div class="card card-secondary">
+                      <div class="card-header">        
+                         <div class="row">
+                             <div class="col-6">
+                                 <div class="card-title">List of Image</div>
+                            </div>
+                                   <div class="col-6">
+                                      <input type="button" id="btnaddnew" value="Add New" class="btn bg-gradient-info  float-right mr-1" data-toggle="modal" data-target="#staticBackdrop">
+                                   </div>
+                              </div>
+                         </div>
+                         <div class="card-body">
+             
+                             <div >
+                                 <table id="tbladmis" class="table table-striped table-bordered request-table" style="width:100%">
+                                     <thead>
+                                         <tr>
+                                             <th>Sl.No</th>                          
+                                             <th>Image</th>
+                                             <th>Created-Date</th>
+                                             <th>Delete</th>
+                                         </tr>
+                                     </thead>
+                                     <tbody>
+                                     </tbody>
+                                 </table>
+                
+                             </div>
+            
+                         </div>
+                </div>
+                <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Add Image</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                             <div class="container">
+                                <div class="col-lg-12">
+                                    <form id="formdist" name="formdist">
+                                        <input name="id" type="hidden" id="hdnid" />
+                                    <div class="form-group">
+                    
+                                        <div id="img" class="form-row">
+                                            <label for="">Image</label>
+                                             <input id="profilepic" type="file" name="files" class="form-control">
+                                        </div>                   
+                   
+                    
+                                        <button  type="submit" class="btn btn-primary w-100 mt-4" style="--bs-btn-bg: #083f49; --bs-btn-border-color: #083f49;">Submit Now</button>
+                                    </div>
+                                 </form>
+                                </div>
+                            </div>
+                          </div>
+                         @* <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Understood</button>
+                          </div>*@
+                        </div>
+                      </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="profile" role="tabpanel">
+              <div class="card card-secondary">
+                      <div class="card-header">        
+                         <div class="row">
+                             <div class="col-6">
+                                 <div class="card-title">List of Videos</div>
+                            </div>
+                                   <div class="col-6">
+                                      <input type="button" id="btnaddnew" value="Add New" class="btn bg-gradient-info  float-right mr-1" data-toggle="modal" data-target="#staticBackdropvideo">
+                                   </div>
+                              </div>
+                         </div>
+                         <div class="card-body">
+             
+                             <div >
+                                 <table id="tbladmisvideo" class="table table-striped table-bordered request-table" style="width:100%">
+                                     <thead>
+                                         <tr>
+                                             <th>Sl.No</th>                          
+                                             <th>Videos</th>
+                                             <th>Created-Date</th>
+                                             <th>Delete</th>
+                                         </tr>
+                                     </thead>
+                                     <tbody>
+                                     </tbody>
+                                 </table>
+                
+                             </div>
+            
+                         </div>
+                </div>
+                <div class="modal fade" id="staticBackdropvideo" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Add Video</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                             <div class="container">
+                                <div class="col-lg-12">
+                                    <form id="formdistv" name="formdistv">
+                                        <input name="id" type="hidden" id="hdnid" />
+                                    <div class="form-group">
+                    
+                                        <div id="img" class="form-row">
+                                            <label for="">Video</label>
+                                             <input id="videoid" type="text" name="vlink" class="form-control">
+                                        </div>                   
+                                         <div id="img" class="form-row">
+                                            <label for="">Image</label>
+                                             <input id="videopic" type="file" name="files" class="form-control">
+                                        </div>
+                    
+                                        <button  type="submit" class="btn btn-primary w-100 mt-4" style="--bs-btn-bg: #083f49; --bs-btn-border-color: #083f49;">Submit Now</button>
+                                    </div>
+                                 </form>
+                                </div>
+                            </div>
+                          </div>
+                         @* <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Understood</button>
+                          </div>*@
+                        </div>
+                      </div>
+                </div>
+            </div>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal -->
+   
+</div>
+@section Scripts
+{
+
+ <script>
+$(function() {
+     binddata();
+    bindvideodata();
+     $('.gallery_sectionVideo').click(function(){
+                var videoName = $(this).attr("data-vid-src");
+                $('#ytbVideo').attr("src",videoName);
+            });
+    $("form[name='formdist']").validate({
+         rules: {
+             files: "required",
+         },
+          messages: {
+              files: "Please upload image",
+          },
+          submitHandler: function(form) {
+               var form = $("#formdist");
+                        var data = new FormData();
+                        var files = $("#profilepic").get(0).files;
+                        data.append("MyUploader", files[0]);
+                        data.append("Type", "2");
+                        $.ajax({
+                            url: '/Admin/Page/OnPostMyUploader', //URL to upload files 
+                            type: "POST", //as we will be posting files and other method POST is used
+                            processData: false, //remember to set processData and ContentType to false, otherwise you may get an error
+                            contentType: false,
+                            data: data,
+                            success: function (result) {                              
+                                
+                                $("#formdist").trigger("reset");
+                                    $("#staticBackdrop").modal('hide');
+                                    binddata();
+                                     alert(result.status);
+                            },
+                            error: function (err) {
+                                alert(err.status);
+                            }
+                        });
+
+          }
+    });
+     $("form[name='formdistv']").validate({
+         rules: {
+             vlink: "required",
+         },
+          messages: {
+              vlink: "Please enter YouTube link.",
+          },
+          submitHandler: function(form) {
+               var form = $("#formdistv");
+                        var data = new FormData();
+                         var files = $("#videopic").get(0).files;
+                        data.append("MyUploader", files[0]);
+                        data.append("name", $("#videoid").val());
+                        data.append("Type", "3");
+                        $.ajax({
+                            url: '/Admin/Page/OnPostMyUploader', //URL to upload files 
+                            type: "POST", //as we will be posting files and other method POST is used
+                            processData: false, //remember to set processData and ContentType to false, otherwise you may get an error
+                            contentType: false,
+                            data: data,
+                            success: function (result) {                              
+                                
+                                $("#formdistv").trigger("reset");
+                                    $("#staticBackdropvideo").modal('hide');
+                                    bindvideodata();
+                                     alert(result.status);
+                            },
+                            error: function (err) {
+                                alert(err.status);
+                            }
+                        });
+
+          }
+    });
+    $(document).on('click', '#btnaddnew', function() {
+        $("#staticBackdropLabel").text("Add Image");
+        $("#formdist").trigger("reset");
+        $("#formdist input[type='hidden']").val("0");
+        $("#formdist").validate().resetForm();
+    });
+     function binddata() 
+            {
+                var TablaExample ;
+                if ( $.fn.dataTable.isDataTable( '#tbladmis' ) ) {
+                    TablaExample = $('#tbladmis').DataTable();
+                    }
+                    else{
+                        TablaExample = $('#tbladmis').DataTable();
+                    }
+               // var TablaExample = $('#tbladmis').DataTable({destroy: true,});
+                    // Delete all data inside table and maintain the DataTable instance
+                    TablaExample.clear().draw();
+                    $('#tbladmis').dataTable().fnDestroy();
+                    $.ajax({
+                            url: '/Admin/Page/GetUploadimagelist', //URL to upload files 
+                            type: "POST", //as we will be posting files and other method POST is used
+                            dataType: "json", 
+                            data: {"Type":2},
+                            content: "application/json; charset=utf-8",
+                            success: function (data) {
+                               
+                                   
+                               var items = '';  
+                                $.each(data, function (i, item) {  
+                                    
+                                    var slno = parseInt(i) + parseInt(1);
+                                    var rows = "<tr>"  
+                                    + "<td>" +slno + "</td>"  
+                                    + "<td class='imagepath'><img width='150px' src=/public/Banner/"+item.name + "></td>"                                    
+                                    + "<td class='publishedMainPage'>" + new Date(item.addedDate) + "<input type='hidden' id='vhdnid' value="+item.id+"></td>"
+                                    + "<td><a id='deleteStudentModal'  class='btn btn-danger'> <i class='glyphicon glyphicon-trash'></i>  Delete </a>  </td>"
+                                    + "</tr>";  
+                                    $('#tbladmis tbody').append(rows);  
+                                }); 
+                                 
+                                $('#tbladmis').DataTable({
+                                    columnDefs: [
+                                        { width: '2%', targets: 0 }
+                                    ],
+                                    fixedColumns: true,
+                                    //"bDestroy": true
+                                }); 
+                              
+                            },
+                            error: function (err) {
+                                alert(err.status);
+                            }
+                        });
+            }
+      function bindvideodata() 
+            {
+                var TablaExample = $('#tbladmisvideo').DataTable();
+                    // Delete all data inside table and maintain the DataTable instance
+                    TablaExample.clear().draw();
+                    $('#tbladmisvideo').dataTable().fnDestroy();
+                    $.ajax({
+                            url: '/Admin/Page/GetUploadimagelist', //URL to upload files 
+                            type: "POST", //as we will be posting files and other method POST is used
+                            dataType: "json", 
+                            data: {"Type":3},
+                            content: "application/json; charset=utf-8",
+                            success: function (data) {
+                               
+                                   
+                               var items = '';  
+                                $.each(data, function (i, item) {  
+                                    
+                                    var slno = parseInt(i) + parseInt(1);
+                                    var rows = "<tr>"  
+                                    + "<td>" +slno + "</td>"  
+                                    + "<td class='imagepath'><div class='gallery_sectionVideo' data-bs-toggle='modal'  data-bs-target='#VidoeModal' data-vid-src='https://www.youtube.com/embed/xcJtL7QggTI'><img src='/public/Banner/"+item.name+"' class='img-fluid' alt=''></div></td>"                                    
+                                    + "<td class='publishedMainPage'>" + new Date(item.addedDate) + "<input type='hidden' id='vhdnid' value="+item.id+"></td>"
+                                    + "<td><a id='deleteStudentModal'  class='btn btn-danger'> <i class='glyphicon glyphicon-trash'></i>  Delete </a>  </td>"
+                                    + "</tr>";  
+                                    $('#tbladmisvideo tbody').append(rows);
+                                }); 
+                                 
+                                $('#tbladmisvideo').DataTable({
+                                    columnDefs: [
+                                        { width: '2%', targets: 0 }
+                                    ],
+                                    fixedColumns: true,
+                                    //"bDestroy": true
+                                }); 
+                              
+                            },
+                            error: function (err) {
+                                alert(err.status);
+                            }
+                        });
+            }      
+$(document).on('click', '#deleteStudentModal', function() {
+    var ids = $(this).parents("tr").find("input[type='hidden']").val();
+    $.jAlert({
+        'type': 'confirm',
+        'confirmQuestion': 'Do you want to delete this?',
+        'onConfirm': function(e, btn) {
+            e.preventDefault();
+
+            $.ajax({
+                url: '/Admin/Page/DeleteUploadimage?id=' + ids, //URL to upload files 
+                type: "POST", //as we will be posting files and other method POST is used
+                // dataType: "json", 
+                // params: { id:ids},
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    binddata();
+                    bindvideodata();
+                    alert(data.status);
+                },
+                error: function(err) {
+                    alert(err.status);
+                }
+            });
+            btn.parents('.jAlert').closeAlert();
+            return false;
+        },
+        'onDeny': function(e, btn) {
+            e.preventDefault();
+            //do something here
+            btn.parents('.jAlert').closeAlert();
+            return false;
+        }
+    });
+
+});
+});
+ </Script>
+}
+

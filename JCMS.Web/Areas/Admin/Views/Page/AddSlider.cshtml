@@ -1,0 +1,163 @@
+﻿
+@{
+    ViewData["Title"] = "AddSlider";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<style>
+    .upload:hover {
+    cursor: pointer;
+}
+</style>
+<div class="row">
+<div class="col-md-6">
+   <div class="card card-primary">
+      <div class="card-header">
+         <h3 class="card-title">General</h3>
+         </div>
+         <div class="card-body">
+             <div class="form-group">
+               <label for="exampleInputFile1">First Slider</label>
+               <div class="input-group">
+                  <div class="custom-file">
+                     <input type="file" name="files" class="custom-file-input" id="InputFile1">
+                     <label class="custom-file-label" for="exampleInputFile1"></label>
+                  </div>
+                  <div class="input-group-append">
+                     <span id="upload" class="input-group-text upload">Upload</span>
+                  </div>
+               </div>
+            </div>
+            <div class="form-group">
+               <label for="exampleInputFile2">Second Slider</label>
+               <div class="input-group">
+                  <div class="custom-file">
+                     <input type="file" class="custom-file-input" id="InputFile2">
+                     <label class="custom-file-label" for="exampleInputFile2"></label>
+                  </div>
+                  <div class="input-group-append">
+                     <span class="input-group-text upload">Upload</span>
+                  </div>
+               </div>
+            </div>
+            <div class="form-group">
+               <label for="exampleInputFile3">Third Slider</label>
+               <div class="input-group">
+                  <div class="custom-file">
+                     <input type="file" class="custom-file-input" id="InputFile3">
+                     <label class="custom-file-label" for="exampleInputFile3"></label>
+                  </div>
+                  <div class="input-group-append">
+                     <span class="input-group-text upload">Upload</span>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+<div class="col-md-6">
+
+  <!-- Section: Images -->
+  <section class="card card-primary">
+       <div class="card-header">
+         <h3 class="card-title">Images</h3>
+         </div>
+         <div class="card-body">
+    <div class="row">
+      <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
+        <div
+          class="bg-image hover-overlay ripple shadow-1-strong rounded" data-ripple-color="light">
+          <img  src="~/public/Banner/banner01.jpg"  class="w-100" style="height:150px" onload='imageRefresh(this, 1000);' />         
+        </div>
+      </div>
+
+      <div class="col-lg-4 mb-4 mb-lg-0">
+        <div  class="bg-image hover-overlay ripple shadow-1-strong rounded" data-ripple-color="light">
+          <img src="~/public/Banner/banner02.jpg" class="w-100" style="height:150px" onload='imageRefresh(this, 1000);'/>
+         
+        </div>
+      </div>
+
+      <div class="col-lg-4 mb-4 mb-lg-0">
+        <div
+          class="bg-image hover-overlay ripple shadow-1-strong rounded" data-ripple-color="light">
+          <img src="~/public/Banner/banner03.jpg" class="w-100" style="height:150px" onload='imageRefresh(this, 1000);'/>         
+        </div>
+      </div>
+    </div>
+    </div>
+   
+  </section>
+  <!-- Section: Images -->
+
+  
+</div>
+</div>
+@*<div class="row">
+   <div class="col-12">
+      <a href="#" class="btn btn-secondary float-right mr-1">Cancel</a>
+      <input type="submit" value="Upload" class="btn btn-success float-right mr-1">
+   </div>
+</div>*@
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".upload").click(function() {
+                var data = $(this).parent().parent().find('input').val();
+                var details = $(this).parent().parent().find('input');
+                if(data!="")
+                {
+                    var formData = new FormData();
+	                formData.append("MyUploader", $(this).parent().parent().find('input')[0].files[0]);
+                    formData.append("id", details[0].id);
+                    $.ajax({
+                            url: '/Admin/Page/OnPostMyUploader', //URL to upload files 
+                            type: "POST", //as we will be posting files and other method POST is used
+                            processData: false, //remember to set processData and ContentType to false, otherwise you may get an error
+                            contentType: false,
+                            data: formData,
+                            success: function (result) {
+                               if(confirm('Successful Message')){
+                                    
+                                        window.location.reload();  
+                                    }
+                            },
+                            error: function (err) {
+                                alert(err.status);
+                            }
+                        });
+                    
+                }
+                
+            });
+        });
+      
+        $('input[type="file"]').change(function(e){
+        var fileName = e.target.files[0].name;
+        var ext = this.value.match(/\.(.+)$/)[1];
+                switch (ext) {
+                                    case 'jpg':
+                                    case 'jpeg':
+                                        $('#uploadButton').attr('disabled', false);
+                                        $(this).parent().find('.custom-file-label').html(fileName);
+                                        break;
+                                    default:
+                                        alert('This is not an allowed file type.');
+                                        this.value = '';
+                              }
+        
+    });
+      function imageRefresh(img, timeout) {
+    setTimeout(function() {
+     var d = new Date;
+     var http = img.src;
+     if (http.indexOf("?d=") != -1) { http = http.split("?d=")[0]; } 
+
+     img.src = http + '?d=' + d.getTime();
+    }, timeout);
+  }
+    </script>
+    
+}
+
+

@@ -1,0 +1,646 @@
+﻿@{
+    ViewData["Title"] = "AddTender";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+
+
+
+<div class="page-controls-section">
+    
+    <div class="card mb-0">
+        <div class="controls-section-header">
+
+            <div class="indicatorslist ">
+                <span id="indicate" style="color:orangered">(<span class="star">*</span>) Indicates mandatory </span>
+
+            </div>
+        </div>
+        <div class="card-body border-top-0">
+            <div class="registration-form">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form id="tfrm">
+                            <div class="user">
+                                <div class="row form-group">
+                                    <label class="col-xl-2 col-lg-3 col-md-4 text-md-right">Tender Title  <span class="star">*</span></label>
+
+                                    <div class="col-xl-4 col-lg-6 col-md-6">
+                                        <input type="text" id="titleEn" class="form-control" autocomplete="off" />
+                                        <div id="TenderTitle" class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <label class="col-xl-2 col-lg-3 col-md-4 text-md-right">Opening Date <span class="star">*</span></label>
+                                    <div class="col-xl-2 col-lg-3 col-md-3">
+                                        <div class="input-group date">
+                                            <input type='text' id="openDate" autocomplete="off" class="form-control datepicker" placeholder="DD-MM-YYYY" />
+
+                                            <div id="TenderopDate" class="invalid-feedback"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-2 col-lg-3 col-md-3">
+                                        <div class="input-group date">
+                                            <input type='text' id="openTime" class="form-control datetimepicker" placeholder="HH:MM:SS" />
+                                            <input type="hidden" id="hdnTenderId" />
+                                            <div id="TenderopTime" class="invalid-feedback"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <label class="col-xl-2 col-lg-3 col-md-4 text-md-right">Closing Date <span class="star">*</span></label>
+                                    <div class="col-xl-2 col-lg-3 col-md-3">
+                                        <div class="input-group date">
+                                            <input type='text' id="closeDate" autocomplete="off" class="form-control datepicker" placeholder="DD-MM-YYYY" />
+
+
+                                            <div id="TendercloseDate" class="invalid-feedback ABC"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-2 col-lg-3 col-md-3">
+                                        <div class="input-group date">
+                                            <input type='text' id="closeTime" class="form-control datetimepicker" placeholder="HH:MM:SS" />
+
+
+
+                                            <div id="TendercloseTime" class="invalid-feedback"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <label class="col-xl-2 col-lg-3 col-md-4 text-md-right">Submission Date <span class="star">*</span></label>
+                                    <div class="col-xl-2 col-lg-3 col-md-3">
+                                        <div class="input-group date">
+                                            <input type='text' id="subDate" autocomplete="off" class="form-control datepicker" placeholder="DD-MM-YYYY" />
+
+                                            <div id="TenderSubeDate" class="invalid-feedback"></div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-2 col-lg-3 col-md-3">
+                                        <div class="input-group date">
+                                            <input type='text' id="subTime" class="form-control datetimepicker" placeholder="HH:MM:SS" />
+
+
+                                            <div id="TenderSubTime" class="invalid-feedback"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <label class="col-xl-2 col-lg-3 col-md-4 text-md-right">Upload Tender <span class="star">*</span></label>
+                                    <div class="col-xl-2 col-lg-3 col-md-3">
+                                        <input type="file" id="fileData" class="form-control">
+                                        <div id="TenderUpload" class="invalid-feedback"></div>
+                                    </div>
+                                    <div class="col-xl-2 col-lg-3 col-md-3">
+                                        <span id="spnIcon"><i class="fa fa-download text-warning"></i></span>
+                                        <a target="_blank" href="#" id="fileLink"><i class="fa fa-download text-warning"></i>  </a>
+                                        
+                                    </div>
+                                </div>
+
+                            <div class="row form-group">
+                                <div class="col-xl-2 col-lg-3 col-md-3 offset-xl-2 offset-lg-3 offset-md-4"><input type="button" id="btnSubmit" value="Submit" class="btn btn-success"></div>
+                            </div>
+                        </div>
+                        </form>
+                       @* <!--View Page Design Start-->
+                        <div class="searchPanel py-2 px-3 bg-light mb-3">
+                            <div class="row align-items-end">
+                                <div class="col-xl-3 col-lg-3 col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Tender Name</label>
+                                        <input type="text" id="txtName" class="form-control" placeholder="Enter Name">
+                                    </div>
+                                </div>
+                               
+                                <div class="col-xl-3 col-lg-3 col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Date </label>
+                                        <div class="input-group date">
+                                            <input type='text' id="txtDate" class="form-control datepicker" placeholder="DD-MM-YYYY" />
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-3 col-md-3">
+                                    <div class="form-group">
+                                        <button class="btn btn-success" onclick="loadData();">Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+                        <div class="table-responsive">
+
+                            <table class="table table-bordered">
+                                <thead class="bg-light">
+                                    <tr>
+                                        <th width="40" class="text-center">Sl#</th>
+                                        <th>Tender Title(English)</th>
+                                        <th>Publish Date</th>
+                                        <th>Opening Date</th>
+                                        <th>Closing Date</th>
+                                        <th style="text-align:center">Download</th>
+                                        <th style="text-align:center">Edit</th>
+                                        @*<th width="80" class="text-center">Action</th>*@
+                                    </tr>
+                                </thead>
+                                <tbody id="AllTable">
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <!--View Page Design End-->
+                    </div>
+
+                </div>
+                <input type="hidden" id="tenderid" value="0" />
+            </div>
+        </div>
+    </div>
+</div>
+@if (User.IsInRole("SuperAdmins"))
+{
+    <input type="text" style="display:none" id="as" value="1">
+}
+else
+{
+    <input type="text" style="display:none" id="as" value="0">
+
+}
+@section Scripts
+    {
+    <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+    <script src="~/theme/plugins/moment/moment.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+           
+            //$("#fileLink").attr("hidden", true);
+            $('#fileLink').hide();
+            $(".datepicker").datepicker({
+                dateFormat: "dd-MM-yy"
+            });
+            $('.datetimepicker').timepicker({
+                timeFormat: 'h:mm p',
+                interval: 15,
+                defaultTime: '11',
+                startTime: '10:00',
+                dynamic: false,
+                dropdown: true,
+                scrollbar: true
+            });
+
+            $("#txtspan").html('Submit');
+            $("#hrefId").hide();
+            $('#spnIcon').hide();
+            loadData();
+
+        });
+        $(document).on('click', '#btnSubmit', function () {
+          
+            if ($("#titleEn").val() != "") {
+                $('#titleEn').removeClass("is-invalid");
+                $('#TenderTitle').html("");
+            }
+            else {
+                $('#titleEn').addClass("form-control shadow-sm is-invalid");
+                $('#TenderTitle').html("Please Enter Tender Title In English!");
+                $('#titleEn').focus();
+                return false;
+            }
+            if ($("#openDate").val() != "") {
+
+                $('#openDate').removeClass("is-invalid");
+                $('#TenderopDate').html("");
+
+                if ($('#hdnId').val() != 0 && $('#hdnId').val() != null) {
+
+                }
+                else {
+                    //var openingDate = $("#openDate").val();
+                    var openingDate = new Date($("#openDate").val());
+                    //var CurrDt = new Date();
+                    var CurrDt = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())
+
+                    if (openingDate < CurrDt) {
+                        $('#openDate').addClass("form-control shadow-sm is-invalid");
+                        $('#TenderopDate').html("Opening date should be greater than current date!");
+                        $('#openDate').focus();
+                        return false;
+                    }
+                }
+            }
+            else {
+                $('#openDate').addClass("form-control shadow-sm is-invalid");
+                $('#TenderopDate').html("Please Choose Opening Date!");
+                $('#openDate').focus();
+                return false;
+            } if ($("#openTime").val() != "") {
+                $('#openTime').removeClass("is-invalid");
+                $('#TenderopTime').html("");
+            }
+            else {
+                $('#openTime').addClass("form-control shadow-sm is-invalid");
+                $('#TenderopTime').html("Please Choose Opening Time!");
+                $('#openTime').focus();
+                return false;
+            }
+            if ($("#closeDate").val() != "") {
+                $('#closeDate').removeClass("is-invalid");
+                $('.ABC').html("");
+                var closingDate = $("#openDate").val();
+                var openingDate = $("#closeDate").val();
+                if (closingDate > openingDate) {
+                    $('#closeDate').addClass("form-control shadow-sm is-invalid");
+                    $('.ABC').html("Close date should be grater than Opening date!");
+                    $('#closeDate').focus();
+                    return false;
+                }
+            }
+            else {
+                $('#closeDate').addClass("form-control shadow-sm is-invalid");
+                $('.ABC').html("Please Choose Closing Date!");
+                $('#closeDate').focus();
+                return false;
+            }
+            if ($("#closeTime").val() != "") {
+                $('#closeTime').removeClass("is-invalid");
+                $('#TendercloseTime').html("");
+            }
+            else {
+                $('#closeTime').addClass("form-control shadow-sm is-invalid");
+                $('#TendercloseTime').html("Please Choose Closing Time!");
+                $('#closeTime').focus();
+                return false;
+            }
+
+            if ($("#subDate").val() != "") {
+                $('#subDate').removeClass("is-invalid");
+                $('#TenderSubeDate').html("");
+            }
+            else {
+                $('#subDate').addClass("form-control shadow-sm is-invalid");
+                $('#TenderSubeDate').html("Please Choose Submission Date!");
+                $('#subDate').focus();
+                return false;
+            }
+            if ($("#subTime").val() != "") {
+                $('#subTime').removeClass("is-invalid");
+                $('#TenderSubTime').html("");
+            }
+            else {
+                $('#subTime').addClass("form-control shadow-sm is-invalid");
+                $('#TenderSubTime').html("Please Choose Submission Time!");
+                $('#subTime').focus();
+                return false;
+            }
+            if ($('#hdnId').val() != 0 && $('#hdnId').val() != null) {
+                if ($("#fileData").val() != "") {
+                    if ($('#hdnIdmax').val() == '12') {
+
+                        $('#fileData').addClass("form-control shadow-sm is-invalid");
+                        $('#TenderUpload').html("File size cannot be greater than 10MB");
+                        $('#fileData').focus();
+                        return false;
+                    }
+                }
+                $('#txtMsg').html('Are you sure you want To Upadte This Record ?');
+            }
+            else {
+
+                if ($("#fileData").val() != "") {
+                    $('#fileData').removeClass("is-invalid");
+                    $('#TenderUpload').html("");
+                }
+                else {
+                    if (document.getElementById("btnSubmit").value == "Update" && $("#fileData").val() == "") {
+
+                    }
+                    else
+                    {
+                        $('#fileData').addClass("form-control shadow-sm is-invalid");
+                        $('#TenderUpload').html("Please Choose a PDF file!");
+                        $('#fileData').focus();
+                        return false;
+                    }
+                }
+
+                if ($('#hdnIdmax').val() == '12') {
+
+                    $('#fileData').addClass("form-control shadow-sm is-invalid");
+                    $('#TenderUpload').html("File size cannot be greater than 10MB");
+                    $('#fileData').focus();
+                    return false;
+                }
+
+                if ($('#hdnId').val() != 0 && $('#hdnId').val() != null) {
+                    //updateData();
+                }
+
+                else {
+                    var submitText = $('#btnSubmit').val();
+                    if (submitText == "Update") {
+                        UpdateFunction();
+                    }
+                    else
+                    {
+                       SubmitFunction();
+                    }
+
+                }
+
+            }
+        });
+        function UpdateFunction() {
+            // alert("Success");
+            debugger;
+            var Id = document.getElementById("hdnTenderId").value;
+            var FileName = document.getElementById('fileLink');
+            var thisRecord = new Object();
+            thisRecord.action = 'A';
+            thisRecord.Id=Id;
+            //thisRecord.iswtsnew = FileName.href;
+            thisRecord.Titleen = $('#titleEn').val().trim();
+            thisRecord.openingDt = $('#openDate').val().trim();
+            thisRecord.openingTime = $('#openTime').val().trim();
+            thisRecord.closingDt = $('#closeDate').val().trim();
+            thisRecord.closeingTime = $('#closeTime').val().trim();
+            thisRecord.subDate = $('#subDate').val().trim();
+            thisRecord.subTime = $('#subTime').val().trim();
+            var $file2 = document.getElementById('fileData')
+            var formData = new FormData();
+            formData.append("PDF", $file2.files[0]);
+            formData.append("RegdInfo", JSON.stringify(thisRecord));
+            $.ajax({
+                url: '/Admin/Content/UpdateTenderDetails',
+                data: formData,
+                type: "post",
+                //dataType: "json",
+                cache: false,
+                async: false,
+                contentType: false,
+                processData: false,
+                beforeSend: function () {
+                    $('.loader-box').addClass('d-block');
+                },
+                success: function (data) {
+                    debugger;
+                    var result = jQuery.parseJSON(data);
+
+                    if (result.state == "success") {
+                        $("#hdnTenderId").val("");
+                        alert(result.message);
+                        $("#tfrm")[0].reset();
+                        loadData();
+                        document.getElementById("btnSubmit").value = "Submit";
+                        $('#fileLink').hide();
+                    }
+                    else {
+                        alert(result.message);
+                        $("#hdnTenderId").val("");
+
+                    }
+                },
+                complete: function () {
+                    $('.loader-box').removeClass('d-block');
+                },
+            });
+        }
+        function SubmitFunction() {
+            // alert("Success");
+            var thisRecord = new Object();
+            thisRecord.action = 'A';
+            thisRecord.Titleen = $('#titleEn').val().trim();
+            thisRecord.openingDt = $('#openDate').val().trim();
+            thisRecord.openingTime = $('#openTime').val().trim();
+            thisRecord.closingDt = $('#closeDate').val().trim();
+            thisRecord.closeingTime = $('#closeTime').val().trim();
+            thisRecord.subDate = $('#subDate').val().trim();
+            thisRecord.subTime = $('#subTime').val().trim();
+            var $file2 = document.getElementById('fileData')
+            var formData = new FormData();
+            formData.append("PDF", $file2.files[0]);
+            formData.append("RegdInfo", JSON.stringify(thisRecord));
+            $.ajax({
+                url: '/Admin/Content/insertTenderDetails',
+                data: formData,
+                type: "post",
+                //dataType: "json",
+                cache: false,
+                async: false,
+                contentType: false,
+                processData: false,
+                beforeSend: function () {
+                    $('.loader-box').addClass('d-block');
+                },
+                success: function (data) {
+                    debugger;
+                    var result = jQuery.parseJSON(data);
+
+                    if (result.state == "success") {
+
+                        alert(result.message);
+                        $("#tfrm")[0].reset();
+                        loadData();
+                    }
+                    else {
+                        alert(result.message);
+                    }
+                },
+                complete: function () {
+                    $('.loader-box').removeClass('d-block');
+                },
+            });
+        }
+        $('#fileData').change(function () {
+            debugger;
+            var $file2 = document.getElementById('fileData')
+            var File = $file2.files[0].size / 1024 / 1024;
+            File = File.toFixed(1);
+            if (File > 1) {
+                $('#fileData').addClass("form-control shadow-sm is-invalid");
+                $('#TenderUpload').html("File size cannot be greater than 10MB");
+                $('#fileData').focus();
+                $('#hdnIdmax').val('12');
+                return false;
+            }
+            else {
+                $('#hdnIdmax').val('0');
+
+            }
+        });
+        function loadData() {
+            $.ajax({
+                url: '/Admin/Content/GetTenderList',                
+                type: "POST",
+                dataType: "json",
+                cache: false,
+                async: false,
+                success: function (data) {                   
+                    var result = data;
+                    var html1 = '';
+                    
+                    if (result.length == 0) {
+                        html1 = '<tr><td colspan="8"><center><b>No Record found</b></center></td></tr>';
+                    }
+                    for (var x = 0; x < result.length; x++) {
+
+
+                        html1 += '<tr>'
+                        html1 += '<td class="text-center">' + (x + 1) + '</td> '
+                        html1 += '<td>' + result[x].titleen + '</td>'
+                        html1 += '<td>' + moment(result[x].openingDt).format('DD-MMM-YYYY h:mmA') + '</td>'
+                        html1 += '<td>' + moment(result[x].closingDt).format('DD-MMM-YYYY h:mmA') + '</td>'
+                        html1 += '<td>' + moment(result[x].subDate).format('DD-MMM-YYYY h:mmA') + '</td>'
+                        html1 += '<td  style="text-align:center"><a target="_blank" href="/Website/download/' + result[x].fileName + '"  ><i class="fa fa-download text-warning"></i>  </a></td>'
+                        //html1 += '<td><a id="editStudentModal" data-toggle="modal" data-target="#staticBackdrop"  class="gfgselect btn btn-info"> <i class="glyphicon glyphicon-pencil"></i>  Edit </a>  </td>'
+                        html1 += '<td>'
+                        //html1 += '<a onclick="FunEditData(' + result[x].id + ');" data-placement="top" data-toggle="tooltip" title="" data-original-title="Edit"><i class="fa fa-edit text-danger"></i></a>'
+                        
+                        
+                        html1 += '<a class="mr-1" onclick="FunEditData(' + result[x].id + ');" data-placement="top" data-toggle="tooltip" title="" data-original-title="Edit"><i class="fa fa-edit text-danger"></i></a>'
+
+                        if ($("#as").val() == "1") {                    
+                                               
+                            html1 += '<a class="mr-1" onclick="FunDeleteData(' + result[x].id + ');" data-placement="top" data-toggle="tooltip" title="" data-original-title="Delete"><i class="fa fa-trash text-danger"></i></a>'
+                            
+                        }
+                        html1 += '</td>'
+                        html1 += '</tr>'
+                    }
+                    
+                    $('#AllTable').html(html1);
+
+                    //    html += '</div>'
+                },
+                complete: function () {
+                    $('.loader-box').removeClass('d-block');
+                },
+            });
+
+
+        }
+        function FunDeleteData(obj) {
+            confirm(function () {
+                $.ajax({
+                    url: '/Admin/Content/DelTenderList',
+                    data: { id: obj },
+                    type: "post",
+                    dataType: "json",
+                    beforeSend: function () {
+                        $('.loader-box').addClass('d-block');
+                    },
+                    success: function (data) {
+
+                        var result = data;
+                        alert(result.message);
+
+                        loadData();
+
+
+                    },
+                    complete: function () {
+                        $('.loader-box').removeClass('d-block');
+                    },
+                });
+            }, function () {
+                console.log('denied');
+            });
+        }
+        //function FunEditData(obj) {
+        //    alert(obj);
+        //    var id = $(obj).data("id");
+
+        //    // Store product id in hidden field
+        //    $("#tenderid").val(id);
+
+        //    // Call Web API to get a list of Products
+        //    $.ajax({
+        //        url: "/Admin/Content/GetselectedTenderList/" + obj,
+        //        type: 'GET',
+        //        dataType: 'json',
+        //        success: function (tender) {
+        //            tenderToFields(tender);
+
+        //            // Change Update Button Text
+        //            $("#btnSubmit").text("Update");
+        //        },
+        //        error: function (request, message, error) {
+        //            //handleException(request, message, error);
+        //        }
+        //    });
+        //}
+        function tenderToFields(tender) {
+            
+            $('#fileLink').show();
+            var FileName = document.getElementById('fileLink');
+            FileName.href = "/Website/download/" + tender.fileName + "";
+            $("#hdnTenderId").val(tender.id);
+            document.getElementById("openDate").disabled = true;
+            document.getElementById("openTime").disabled = true;
+            document.getElementById("btnSubmit").value = "Update";
+            $("#titleEn").val(tender.titleen);
+            var dateYear = ConvertDate(tender.openingDt);
+            $('#openDate').val(dateYear);
+            $('#openTime').val(ConvertTime(tender.openingDt));
+            var dateYearClose = ConvertDate(tender.closingDt);
+            $("#closeDate").val(dateYearClose);
+            $('#closeTime').val(ConvertTime(tender.closingDt));
+            var dateYearSub = ConvertDate(tender.subDate);
+            $("#subDate").val(dateYearSub);
+            $('#subTime').val(ConvertTime(tender.subDate));
+            $("#fileData").val(tender.fileName);   
+            $("#openDate").prop("readonly", true);
+           
+           
+            //$("#openDate").prop('disabled', true);
+            //$("#openDate").attr("disabled", true);
+        }
+        function FunEditData(obj) {
+            //debugger;
+                $.ajax({
+                url: "/Admin/Content/GetselectedTenderList/" + obj,
+                    data: { id: obj },
+                    type: "post",
+                    dataType: "json",
+                    beforeSend: function () {
+                        $('.loader-box').addClass('d-block');
+                    },
+                    success: function (data) {
+                        //debugger;
+                   
+                   
+                    tenderToFields(data[0]);
+                },
+                    complete: function () {
+                        $('.loader-box').removeClass('d-block');
+                    },
+                });
+            
+        }
+        function ConvertDate(obj)
+        {
+            const Constmonth = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            const d = new Date(obj);
+            var day = d.getDate();
+            if (day <= 9) {
+                day = "0" + day;
+            }
+            var month = Constmonth[d.getMonth()];
+            var year = d.getFullYear();
+            return  day + "-" + month + "-" + year;
+        }
+        function ConvertTime(obj)
+        {
+            var event = new Date(obj);
+            var time = event.toLocaleTimeString('en-US');
+            return time;
+        }
+         </script>
+}      

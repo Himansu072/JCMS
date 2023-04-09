@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewData["Title"] = "Programme";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section id="about_section">
+    <div class="container">
+        <div id="abtus">
+        </div>
+    </div>
+</section>
+
+@section scripts
+    {
+    <script>
+        $(document).ready(function () {
+            Getaboutus();
+            function Getaboutus() {
+                $.ajax({
+                    url: '/Admin/Content/GetPogrameCategoryid', //URL to upload files
+                    type: "POST", //as we will be posting files and other method POST is used
+                    dataType: "json",
+                    data: {
+                        "id": @ViewBag.id
+                    },
+                    content: "application/json; charset=utf-8",
+                    success: function (data) {
+                        var str = data.categoryContent;
+                        if (str != null) {
+
+                            $("#abtus").html(str);
+                        }
+
+                    },
+                    error: function (err) {
+                        alert(err.status);
+                    }
+                });
+            }
+        });
+    </script>
+
+}
+

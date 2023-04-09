@@ -1,0 +1,298 @@
+﻿
+@{
+    ViewData["Title"] = "Counciler";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row">
+<div class="col-md-12">
+   <div class="card card-secondary">
+      <div class="card-header">        
+         <div class="row">
+             <div class="col-6">
+                 <div class="card-title">List of Counciler</div>
+            </div>
+                   <div class="col-6">
+                      <input type="button" id="btnaddnew" value="Add New" class="btn bg-gradient-info  float-right mr-1" data-toggle="modal" data-target="#staticBackdrop">
+                   </div>
+              </div>
+         </div>
+         <div class="card-body">
+             
+             <div >
+                 <table id="tbladmis" class="table table-striped table-bordered request-table" style="width:100%">
+                     <thead>
+                         <tr>
+                              <th>Sl.No</th>                          
+                              <th>Name</th>
+                              <th>Designation</th>
+                              <th>Council</th>
+                              <th>Photo</th>
+                              <th>Mobile No</th>
+                             
+                              <th>Period From</th>
+                              <th>Period To</th>
+                              <th>Action</th>
+                         </tr>
+                     </thead>
+                     <tbody>
+                     </tbody>
+                 </table>
+                
+             </div>
+            
+         </div>
+      </div>
+ <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Add Counciler</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         <div class="container">
+            <div class="col-lg-12">
+                <form id="formdist" name="formdist">
+                    <input name="id" type="hidden" id="hdnid" />
+                <div class="form-group">
+                        
+                    <div  class="form-row">
+                        <label for=""> Name</label>
+                         <input id="wardoffcername" type="text" name="wardoffcername" class="form-control">
+                    </div>                   
+                    <div class="form-row">
+                        <label for="">Designation</label>
+                        <select id="Designation" name="Designation" class="form-control">
+                           @* <option value="0">Select a Designation</option>*@
+                            <option value="Counciler">Counciler</option>
+                            <option value="Chairperson">Chairperson</option>
+                            <option value="Vice Chairperson">Vice Chairperson</option>
+                        </select>
+                    </div>
+                     <div class="form-row">
+                        <label for="">Council</label>
+                        <select id="ddlward" class="form-control"></select>
+                    </div>
+                    <div class="form-row">
+                        <label for="">Mobile</label>
+                        <input id="mobile" type="text" name="mobile" class="form-control">
+                    </div>
+                  
+                     <div class="form-row">
+                        <label for="">Email(optional)</label>
+                        <input id="email" type="text" name="email" class="form-control">
+                    </div>
+                     <div class="form-row">
+                        <label for="">Period From</label>
+                        <input id="periodform" type="date" name="periodto" class="form-control">
+                    </div>
+                    <div class="form-row">
+                        <label for="">Period To</label>
+                        <input id="periodto" type="date" name="website" class="form-control">
+                    </div>
+                     <div id="img" class="form-row">
+                        <label for="">Image</label>
+                         <input id="profilepic" type="file" name="files" class="form-control">
+                    </div>
+                    
+                    <button  type="submit" class="btn btn-primary w-100 mt-4" style="--bs-btn-bg: #083f49; --bs-btn-border-color: #083f49;">Submit Now</button>
+                </div>
+             </form>
+            </div>
+        </div>
+      </div>
+     @* <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Understood</button>
+      </div>*@
+    </div>
+  </div>
+</div>
+
+   </div>
+</div>
+@section Scripts
+{
+ <script>
+$(function() {
+     binddata();
+     binddropdown();
+    $("form[name='formdist']").validate({
+         rules: {
+             wardoffcername: "required",
+         },
+          messages: {
+              wardoffcername: "Please Enter Word Officername",
+          },
+          rules: {
+             Address: "required",
+         },
+          messages: {
+              Address: "Please Add Address",
+          },
+          mobile: {
+            required: true,
+            digits: true,
+            rangelength: [10, 12],
+        },
+        email:{
+            required: true,
+            digits: true,
+            rangelength: [10, 12],
+        },
+        website:{
+        required: true,
+            digits: true,
+            rangelength: [10, 12],
+        },
+
+          submitHandler: function(form) {
+               var form = $("#formdist");
+                        var data = new FormData();
+                        data.append("Name", $("#wardoffcername").val());
+                        data.append("Designation", $("#Designation").val());
+                        data.append("councilid", $("#ddlward").val());
+                        data.append("Mobileno", $("#mobile").val());
+                        data.append("Email", $("#email").val());
+                        data.append("PeriodFrom", $("#periodform").val());
+                        data.append("PeriodTo", $("#periodto").val());
+                        var files = $("#profilepic").get(0).files;
+                        data.append("MyUploader", files[0]);
+                        $.ajax({
+                            url: '/Admin/Page/SaveCounciler',  
+                            type: "POST", 
+                            processData: false, 
+                            contentType: false,
+                            data: data,
+                            success: function (result) {                              
+                                
+                                $("#formdist").trigger("reset");
+                                    $("#staticBackdrop").modal('hide');
+                                    binddata();
+                                     alert(result.status);
+                            },
+                            error: function (err) {
+                                alert(err.status);
+                            }
+                        });
+
+          }
+    });
+    $(document).on('click', '#btnaddnew', function() {
+        $("#staticBackdropLabel").text("Add Counciler");
+        $("#formdist").trigger("reset");
+        $("#formdist input[type='hidden']").val("0");
+        $("#formdist").validate().resetForm();
+    });
+     function binddata() 
+            {
+                var TablaExample = $('#tbladmis').DataTable();
+                    // Delete all data inside table and maintain the DataTable instance
+                    TablaExample.clear().draw();
+                    $('#tbladmis').dataTable().fnDestroy();
+                    $.ajax({
+                            url: '/Admin/Page/GetAllCounciler', //URL to upload files 
+                            type: "POST", //as we will be posting files and other method POST is used
+                            dataType: "json", 
+                            data: {"Type":4},
+                            content: "application/json; charset=utf-8",
+                            success: function (data) {
+                               
+                                   
+                               var items = '';  
+                                $.each(data, function (i, item) {  
+                                    debugger;
+                                    var slno = parseInt(i) + parseInt(1);
+                                    var rows = "<tr>"  
+                                    + "<td style='vertical-align: middle;'>" +slno + "</td>"  
+                                    //+ "<td class='name'>" + item.categoryName + "</td>"   
+                                    + "<td class='name'>" + item.name + "</td>"
+                                    + "<td class='name'>" + item.designation + "</td>"
+                                    + "<td class='name'>" + item.councilid + "</td>"
+                                    +"<td class='imagepath' style='vertical-align: middle;'><img width='150px' src=/public/Banner/"+item.photo + " style='width:50px'></td>"                                    
+                                    + "<td class='name'>" + item.mobileno + "</td>"
+                                   + "<td class='name'>" + item.periodFrom + "</td>"
+                                    + "<td class='name'>" + item.periodTo + "</td>"
+                                    //+ "<td><a id='editStudentModal' data-toggle='modal' data-target='#staticBackdrop'  class='gfgselect btn btn-info'> <i class='glyphicon glyphicon-pencil'></i>  Edit </a>  </td>"
+                                    + "<td style='vertical-align: middle;'><a id='deleteStudentModal'  class='btn btn-danger'> <i class='glyphicon glyphicon-trash'></i>  Delete </a>  </td>"
+                                    + "</tr>";  
+                                    $('#tbladmis tbody').append(rows);  
+                                }); 
+                                 
+                                $('#tbladmis').DataTable({
+                                    columnDefs: [
+                                        { width: '2%', targets: 0 }
+                                    ],
+                                    fixedColumns: true,
+                                    //"bDestroy": true
+                                }); 
+                              
+                            },
+                            error: function (err) {
+                                alert(err.status);
+                            }
+                        });
+            }
+     function binddropdown() {
+            var ddlCustomers = $("#ddlward");
+            ddlCustomers.empty().append('<option selected="selected" value="0" disabled = "disabled">Loading.....</option>');
+            $.ajax({
+                type: "POST",
+                url: '/Admin/Page/GetAllCouncilName',
+                data: '{}',
+                success: function (response) {
+                    ddlCustomers.empty().append('<option selected="selected" value="0">Please select</option>');
+                    $.each(response, function () {
+                        ddlCustomers.append($("<option></option>").val(this['value']).html(this['text']));
+                    });
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        }    
+    $(document).on('click', '#deleteStudentModal', function() {
+    var ids = $(this).parents("tr").find("input[type='hidden']").val();
+    $.jAlert({
+        'type': 'confirm',
+        'confirmQuestion': 'Do you want to delete this?',
+        'onConfirm': function(e, btn) {
+            e.preventDefault();
+
+            $.ajax({
+                url: '/Admin/Page/DeletePublicUtility?id=' + ids, //URL to upload files 
+                type: "POST", //as we will be posting files and other method POST is used
+                // dataType: "json", 
+                // params: { id:ids},
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    binddata();
+                    alert(data.status);
+                },
+                error: function(err) {
+                    alert(err.status);
+                }
+            });
+            btn.parents('.jAlert').closeAlert();
+            return false;
+        },
+        'onDeny': function(e, btn) {
+            e.preventDefault();
+            //do something here
+            btn.parents('.jAlert').closeAlert();
+            return false;
+        }
+    });
+
+});
+  
+});
+ </Script>
+}
+

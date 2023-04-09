@@ -1,0 +1,442 @@
+﻿
+@{
+    ViewData["Title"] = "Add Announcement";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="page-controls-section">
+    @if (User.IsInRole("SuperAdmins"))
+    {
+        <input type="hidden" style="display:none" id="as" value="1">
+    }
+    else
+    {
+        <input type="hidden" style="display:none" id="as" value="0">
+
+    }
+    <div class="card mb-0">
+        <div class="controls-section-header">
+
+            <div class="indicatorslist ">
+                <span id="indicate" style="color:orangered">(<span class="star">*</span>) Indicates mandatory </span>
+
+            </div>
+        </div>
+        <div class="card-body border-top-0">
+            <div class="registration-form">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form id="tfrm">
+                            <div class="user">
+                                <div class="row form-group">
+                                    <label class="col-xl-2 col-lg-3 col-md-4 text-md-right">Title  <span class="star">*</span></label>
+
+                                    <div class="col-xl-4 col-lg-6 col-md-6">
+                                        <input type="text" id="titleEn" class="form-control" autocomplete="off" />
+                                        <div id="Title" class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <label class="col-xl-2 col-lg-3 col-md-4 text-md-right">Description <span class="star">*</span></label>
+
+                                    <div class="col-xl-4 col-lg-6 col-md-6">
+                                        <input type="text" id="descen" class="form-control" autocomplete="off" />
+                                        <div id="desc" class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <label class="col-xl-2 col-lg-3 col-md-4 text-md-right">Opening Date <span class="star">*</span></label>
+                                    <div class="col-xl-2 col-lg-3 col-md-3">
+                                        <div class="input-group date">
+                                            <input type='text' id="openDate" autocomplete="off" class="form-control datepicker" placeholder="DD-MM-YYYY" />
+
+                                            <div id="TenderopDate" class="invalid-feedback"></div>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                                <div class="row form-group">
+                                    <label class="col-xl-2 col-lg-3 col-md-4 text-md-right">Closing Date <span class="star">*</span></label>
+                                    <div class="col-xl-2 col-lg-3 col-md-3">
+                                        <div class="input-group date">
+                                            <input type='text' id="closeDate" autocomplete="off" class="form-control datepicker" placeholder="DD-MM-YYYY" />
+
+
+                                            <div id="TendercloseDate" class="invalid-feedback ABC"></div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            
+
+                                <div class="row form-group">
+                                    <label class="col-xl-2 col-lg-3 col-md-4 text-md-right">Upload <span class="star">*</span></label>
+                                    <div class="col-xl-2 col-lg-3 col-md-3">
+                                        <input type="file" id="fileData" class="form-control">
+                                        <div id="TenderUpload" class="invalid-feedback"></div>
+                                    </div>
+                                    <div class="col-xl-2 col-lg-3 col-md-3">
+                                        <span id="spnIcon"><i class="fa fa-download text-warning"></i></span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="staticEmail" class="col-sm-2 col-form-label"></label>
+                                    <div class="col-sm-10">
+                                        <input type="checkbox" class="form-check-input" value="0" id="Wtnew" name="Wtnew" />
+                                        Please check if this will publish in whatsNew tab.
+                                        <div id="Wtnewerr" class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col-xl-2 col-lg-3 col-md-3 offset-xl-2 offset-lg-3 offset-md-4"><input type="button" id="btnSubmit" value="Submit" class="btn btn-success"></div>
+                                </div>
+                            </div>
+                        </form>
+                       
+                        <div class="table-responsive">
+
+                            <table class="table table-bordered">
+                                <thead class="bg-light">
+                                    <tr>
+                                        <th width="40" class="text-center">Sl#</th>
+                                        <th>Title</th>
+                                        <th>Description</th>
+                                        <th>Opening Date</th>
+                                        <th>Closing Date</th>
+                                        <th style="text-align:center">Download</th>
+                                        <th width="80" class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="AllTable">
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <!--View Page Design End-->
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+    {
+    <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+    <script src="~/theme/plugins/moment/moment.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $(".datepicker").datepicker({
+                dateFormat: "dd-MM-yy"
+            });
+            $('.datetimepicker').timepicker({
+                timeFormat: 'h:mm p',
+                interval: 15,
+                defaultTime: '11',
+                startTime: '10:00',
+                dynamic: false,
+                dropdown: true,
+                scrollbar: true
+            });
+
+            $("#txtspan").html('Submit');
+            $("#hrefId").hide();
+            $('#spnIcon').hide();
+            loadData();
+
+        });
+        $(document).on('click', '#btnSubmit', function () {
+            if ($("#titleEn").val() != "") {
+                $('#titleEn').removeClass("is-invalid");
+                $('#TenderTitle').html("");
+            }
+            else {
+                $('#titleEn').addClass("form-control shadow-sm is-invalid");
+                $('#TenderTitle').html("Please Enter Tender Title In English!");
+                $('#titleEn').focus();
+                return false;
+            }
+            if ($("#openDate").val() != "") {
+
+                $('#openDate').removeClass("is-invalid");
+                $('#TenderopDate').html("");
+
+                if ($('#hdnId').val() != 0 && $('#hdnId').val() != null) {
+
+                }
+                else {
+                    //var openingDate = $("#openDate").val();
+                    var openingDate = new Date($("#openDate").val());
+                    //var CurrDt = new Date();
+                    var CurrDt = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())
+
+                    if (openingDate < CurrDt) {
+                        $('#openDate').addClass("form-control shadow-sm is-invalid");
+                        $('#TenderopDate').html("Opening date should be greater than current date!");
+                        $('#openDate').focus();
+                        return false;
+                    }
+                }
+            }
+            else {
+                $('#openDate').addClass("form-control shadow-sm is-invalid");
+                $('#TenderopDate').html("Please Choose Opening Date!");
+                $('#openDate').focus();
+                return false;
+            } if ($("#openTime").val() != "") {
+                $('#openTime').removeClass("is-invalid");
+                $('#TenderopTime').html("");
+            }
+            else {
+                $('#openTime').addClass("form-control shadow-sm is-invalid");
+                $('#TenderopTime').html("Please Choose Opening Time!");
+                $('#openTime').focus();
+                return false;
+            }
+            if ($("#closeDate").val() != "") {
+                $('#closeDate').removeClass("is-invalid");
+                $('.ABC').html("");
+                var closingDate = $("#openDate").val();
+                var openingDate = $("#closeDate").val();
+                if (closingDate > openingDate) {
+                    $('#closeDate').addClass("form-control shadow-sm is-invalid");
+                    $('.ABC').html("Close date should be grater than Opening date!");
+                    $('#closeDate').focus();
+                    return false;
+                }
+            }
+            else {
+                $('#closeDate').addClass("form-control shadow-sm is-invalid");
+                $('.ABC').html("Please Choose Closing Date!");
+                $('#closeDate').focus();
+                return false;
+            }
+            if ($("#closeTime").val() != "") {
+                $('#closeTime').removeClass("is-invalid");
+                $('#TendercloseTime').html("");
+            }
+            else {
+                $('#closeTime').addClass("form-control shadow-sm is-invalid");
+                $('#TendercloseTime').html("Please Choose Closing Time!");
+                $('#closeTime').focus();
+                return false;
+            }
+
+            if ($("#subDate").val() != "") {
+                $('#subDate').removeClass("is-invalid");
+                $('#TenderSubeDate').html("");
+            }
+            else {
+                $('#subDate').addClass("form-control shadow-sm is-invalid");
+                $('#TenderSubeDate').html("Please Choose Submission Date!");
+                $('#subDate').focus();
+                return false;
+            }
+            if ($("#subTime").val() != "") {
+                $('#subTime').removeClass("is-invalid");
+                $('#TenderSubTime').html("");
+            }
+            else {
+                $('#subTime').addClass("form-control shadow-sm is-invalid");
+                $('#TenderSubTime').html("Please Choose Submission Time!");
+                $('#subTime').focus();
+                return false;
+            }
+            if ($('#hdnId').val() != 0 && $('#hdnId').val() != null) {
+                if ($("#fileData").val() != "") {
+                    if ($('#hdnIdmax').val() == '12') {
+
+                        $('#fileData').addClass("form-control shadow-sm is-invalid");
+                        $('#TenderUpload').html("File size cannot be greater than 10MB");
+                        $('#fileData').focus();
+                        return false;
+                    }
+                }
+                $('#txtMsg').html('Are you sure you want To Upadte This Record ?');
+            }
+            else {
+
+                if ($("#fileData").val() != "") {
+                    $('#fileData').removeClass("is-invalid");
+                    $('#TenderUpload').html("");
+                }
+                else {
+                    $('#fileData').addClass("form-control shadow-sm is-invalid");
+                    $('#TenderUpload').html("Please Choose a PDF file!");
+                    $('#fileData').focus();
+                    return false;
+                }
+
+                if ($('#hdnIdmax').val() == '12') {
+
+                    $('#fileData').addClass("form-control shadow-sm is-invalid");
+                    $('#TenderUpload').html("File size cannot be greater than 10MB");
+                    $('#fileData').focus();
+                    return false;
+                }
+
+                if ($('#hdnId').val() != 0 && $('#hdnId').val() != null) {
+                    //updateData();
+                }
+
+                else {
+                    SubmitFunction();
+
+                }
+
+            }
+        });
+        function SubmitFunction() {
+            // alert("Success");
+
+            var thisRecord = new Object();
+            thisRecord.action = 'A';
+            thisRecord.Title = $('#titleEn').val().trim();
+            thisRecord.StartDate = $('#openDate').val().trim();
+            thisRecord.Description = $('#descen').val().trim();
+            thisRecord.EndDate = $('#closeDate').val().trim();
+            thisRecord.iswtsnew = $('#Wtnew').is(":checked") ? 1 : 0;
+            thisRecord.Type = '1';
+            var $file2 = document.getElementById('fileData')
+            var formData = new FormData();
+            formData.append("PDF", $file2.files[0]);
+            formData.append("RegdInfo", JSON.stringify(thisRecord));
+            $.ajax({
+                url: '/Admin/Content/insertAnnouncementDetails',
+                data: formData,
+                type: "post",
+                //dataType: "json",
+                cache: false,
+                async: false,
+                contentType: false,
+                processData: false,
+                beforeSend: function () {
+                    $('.loader-box').addClass('d-block');
+                },
+                success: function (data) {
+                    debugger;
+                    var result = jQuery.parseJSON(data);
+
+                    if (result.state == "success") {
+
+                        alert(result.message);
+                        $("#tfrm")[0].reset();
+                        loadData();
+                    }
+                    else {
+                        alert(result.message);
+                    }
+                },
+                complete: function () {
+                    $('.loader-box').removeClass('d-block');
+                },
+            });
+        }
+        $('#fileData').change(function () {
+            debugger;
+            var $file2 = document.getElementById('fileData')
+            var File = $file2.files[0].size / 1024 / 1024;
+            File = File.toFixed(1);
+            if (File > 1) {
+                $('#fileData').addClass("form-control shadow-sm is-invalid");
+                $('#TenderUpload').html("File size cannot be greater than 10MB");
+                $('#fileData').focus();
+                $('#hdnIdmax').val('12');
+                return false;
+            }
+            else {
+                $('#hdnIdmax').val('0');
+
+            }
+        });
+        function loadData() {
+            debugger;
+            //$('#btnSubmit').text('Submit');
+            $.ajax({
+                url: '/Admin/Content/GetAnnouncementList',
+                //data: { tName: $('#txtName').val(), date: $('#txtDate').val() },
+                type: "POST",
+                dataType: "json",
+                cache: false,
+                async: false,
+                //contentType: false,
+                //processData: false,
+                beforeSend: function () {
+                    //$('.loader-box').addClass('d-block');
+                },
+                success: function (data) {
+                    debugger;
+                    var result = data;
+                    var html1 = '';
+
+                    if (result.length == 0) {
+                        html1 = '<tr><td colspan="8"><center><b>No Record found</b></center></td></tr>';
+                    }
+                    for (var x = 0; x < result.length; x++) {
+
+
+                        html1 += '<tr>'
+                        html1 += '<td class="text-center">' + (x + 1) + '</td> '
+                        html1 += '<td>' + result[x].title + '</td>'
+                        html1 += '<td>' + result[x].description + '</td>'
+                        html1 += '<td>' + moment(result[x].startDate).format('DD-MM-YYYY h:mmA') + '</td>'
+                        html1 += '<td>' + moment(result[x].endDate).format('DD-MM-YYYY h:mmA') + '</td>'
+                        html1 += '<td  style="text-align:center"><a target="_blank" href="/Website/download/' + result[x].filename + '"  ><i class="fa fa-download text-warning"></i>  </a></td>'
+                        html1 += '<td>'
+
+                        //html1 += '<input type="button"  value="EDIT" data-id="' + result[x].Tid + '" onclick="FunEditData();"/> '
+
+                        //html1 += '<input type="button" value="DELETE" data-id="' + result[x].Tid +'" onclick="FunDelete();"/>'
+
+                        html1 += '<a  class="mr-1" onclick="FunEditData(' + result[x].Id + ');" data-placement="top" data-toggle="tooltip" title="" data-original-title="Edit"><i class="fa fa-edit text-info"></i></a>'
+                        if ($("#as").val() == "1") {
+                        html1 += '<a onclick="FunDeleteData(' + result[x].id + ');" data-placement="top" data-toggle="tooltip" title="" data-original-title="Delete"><i class="fa fa-trash text-danger"></i></a>'
+                        }
+                        html1 += '</td>'
+                        html1 += '</tr>'
+                    }
+                    //html += '</tbody>'
+                    //html += '</table>'
+                    $('#AllTable').html(html1);
+
+                    //    html += '</div>'
+                },
+                complete: function () {
+                    $('.loader-box').removeClass('d-block');
+                },
+            });
+
+
+        }
+        function FunDeleteData(obj) {
+            confirm(function () {
+                $.ajax({
+                    url: '/Admin/Content/DelAnnouncementList',
+                    data: { id: obj },
+                    type: "post",
+                    dataType: "json",
+                    beforeSend: function () {
+                        $('.loader-box').addClass('d-block');
+                    },
+                    success: function (data) {
+
+                        var result = data;
+                        alert(result.message);
+
+                        loadData();
+
+
+                    },
+                    complete: function () {
+                        $('.loader-box').removeClass('d-block');
+                    },
+                });
+            }, function () {
+                console.log('denied');
+            });
+        }
+    </script>
+}
